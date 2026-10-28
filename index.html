@@ -3011,8 +3011,33 @@ input,textarea,select{font-family:var(--sans)}
 .recommend-page .ink-tabs>button:after{background:#111}
 .recommend-page .ink-tabs .red-dot{box-shadow:0 0 0 2px #fff;top:10px;right:4px}
 .recommend-page .reco-nav .icon-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:#111}
+.recommend-page .reco-nav .reco-bell{left:8px;right:auto}
+.recommend-page .reco-nav .reco-search{left:auto;right:8px}
 .recommend-page .reco-nav .icon-btn .red-dot{box-shadow:0 0 0 2.5px #fff!important}
 .recommend-page .feed-intro{background:#fff;color:#111;padding:18px 16px 20px;border:0;border-bottom:.5px solid #E5E5EA}
+
+/* search sheet */
+.search-field{
+  display:flex;align-items:center;gap:8px;flex:none;
+  height:46px;padding:0 12px;margin:8px 0 4px;
+  background:#F2F2F7;border-radius:12px;color:#8E8E93
+}
+.search-field .ico{display:flex;flex:none;color:#8E8E93}
+.search-field input{
+  flex:1;min-width:0;height:46px;border:0;outline:0;background:transparent;
+  color:#111;font-size:16px;letter-spacing:-.2px
+}
+.search-field input::placeholder{color:#8E8E93}
+.search-results{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px 0 calc(12px + env(safe-area-inset-bottom))}
+.search-group-title{font-size:12px;font-weight:600;letter-spacing:-.05px;color:#8E8E93;padding:13px 2px 4px}
+.search-result{display:flex;align-items:center;gap:10px;width:100%;padding:10px 2px;border-bottom:.5px solid #E5E5EA;text-align:left}
+.search-result:last-child{border-bottom:0}
+.search-thumb{width:44px;height:44px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;font-size:21px}
+.sr-main{flex:1;min-width:0}
+.sr-title{display:block;font-size:14px;line-height:1.35;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-sub{display:block;font-size:11.5px;line-height:1.35;color:#8E8E93;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result .chev{display:flex;flex:none;color:#C7C7CC}
+.search-empty{padding:36px 16px;text-align:center;color:#8E8E93;font-size:13px;line-height:1.6}
 .recommend-page .feed-kicker{color:#8E8E93}
 .recommend-page .feed-h1{color:#111}
 .recommend-page .feed-sub{color:#6E6E73}
@@ -4169,7 +4194,8 @@ function renderRecommend(){
   return '<div class="recommend-page">' +
     '<header class="reco-nav">' +
       '<div class="reco-tabs ink-tabs" data-seg-key="reco" role="tablist" aria-label="推荐信息流">' + tabHtml + '</div>' +
-      '<button class="icon-btn press" data-act="tab" data-tab="messages" aria-label="消息">' + icon('bell', 21) + (unreadCount() ? '<span class="red-dot" style="right:11px;top:9px"></span>' : '') + '</button>' +
+      '<button class="icon-btn reco-bell press" data-act="tab" data-tab="messages" aria-label="消息">' + icon('bell', 21) + (unreadCount() ? '<span class="red-dot" style="right:11px;top:9px"></span>' : '') + '</button>' +
+      '<button class="icon-btn reco-search press" data-act="openSearch" aria-label="搜索">' + icon('search', 21) + '</button>' +
     '</header>' +
     '<div class="feed-intro">' +
       '<div class="feed-kicker">' + e(intro.kicker) + '</div>' +
@@ -4178,6 +4204,49 @@ function renderRecommend(){
     '</div>' +
     '<div class="feed-list stagger">' + feeds + '</div>' +
   '</div>';
+}
+function searchResultRow(type, id, title, sub, emoji, color){
+  var act = type === 'mall' ? 'searchOpenMall' : (type === 'reco' ? 'searchOpenReco' : 'openListing');
+  return '<button class="search-result" data-act="' + act + '" data-id="' + e(id) + '">' +
+    '<span class="search-thumb" style="background:' + e(color || '#EEE') + '">' + e(emoji || '·') + '</span>' +
+    '<span class="sr-main"><span class="sr-title">' + e(title) + '</span><span class="sr-sub">' + e(sub) + '</span></span>' +
+    '<span class="chev">' + icon('chevron', 13) + '</span>' +
+  '</button>';
+}
+function searchResultsHtml(q){
+  var query = String(q || '').trim().toLowerCase();
+  if(!query){
+    return '<div class="search-empty">搜索闲置、技能、城市或精选</div>';
+  }
+  var posts = getPosts(), mall = getMall(), recs = getInterest();
+  var out = '', rows = '', i, item, text;
+  for(i = 0; i < posts.length; i++){
+    item = posts[i];
+    text = [item.title, item.desc, item.cat, item.city, item.user].join(' ').toLowerCase();
+    if(text.indexOf(query) !== -1){
+      rows += searchResultRow('post', item.id, item.title, [item.cat, item.cond, item.city].filter(Boolean).join(' · '), item.emoji, item.color);
+    }
+  }
+  if(rows){ out += '<div class="search-group-title">闲置与技能</div>' + rows; }
+  rows = '';
+  for(i = 0; i < mall.length; i++){
+    item = mall[i];
+    text = [item.title, item.subtitle, item.desc, item.cond, item.promo].join(' ').toLowerCase();
+    if(text.indexOf(query) !== -1){
+      rows += searchResultRow('mall', item.id, item.title, ['平台精选', item.cond].filter(Boolean).join(' · '), item.emoji, item.color);
+    }
+  }
+  if(rows){ out += '<div class="search-group-title">平台精选</div>' + rows; }
+  rows = '';
+  for(i = 0; i < recs.length; i++){
+    item = recs[i];
+    text = [item.title, item.desc, item.cat, item.user, item.city].join(' ').toLowerCase();
+    if(text.indexOf(query) !== -1){
+      rows += searchResultRow('reco', item.id, item.title, ['推荐', item.user].filter(Boolean).join(' · '), item.emoji, item.bg);
+    }
+  }
+  if(rows){ out += '<div class="search-group-title">推荐</div>' + rows; }
+  return out || '<div class="search-empty">没有找到「' + e(q) + '」<br>换个关键词试试。</div>';
 }
 function feedCard(r){
   var liked = !!r.liked;
@@ -5561,6 +5630,26 @@ ACTIONS.tab = function(el){
   closeOverlay();
   switchTab(tab);
 };
+ACTIONS.openSearch = function(){
+  var html = '<div class="sheet full">' + sheetHead('搜索', '找一件物品、一门手艺或一份精选') +
+    '<div class="search-field">' + icon('search', 18) + '<input id="searchInput" type="search" placeholder="搜索闲置、技能、城市或精选" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="搜索内容"></div>' +
+    '<div class="search-results" id="searchResults">' + searchResultsHtml('') + '</div></div>';
+  openOverlay(html, 'search');
+  window.setTimeout(function(){
+    var input = document.getElementById('searchInput');
+    if(input){ input.focus(); }
+  }, 120);
+};
+ACTIONS.searchOpenMall = function(el){
+  var id = el.getAttribute('data-id');
+  closeOverlay();
+  navigate('mallDetail', {id:id});
+};
+ACTIONS.searchOpenReco = function(el){
+  var id = el.getAttribute('data-id');
+  closeOverlay();
+  navigate('recoDetail', {id:id});
+};
 ACTIONS.goCart = function(){ closeOverlay(); navigate('cart'); };
 ACTIONS.goCheckout = function(){ closeOverlay(); navigate('checkout'); };
 ACTIONS.goPrivacy = function(){ closeOverlay(); navigate('privacy'); };
@@ -6468,6 +6557,11 @@ document.addEventListener('click', function(ev){
 });
 document.addEventListener('input', function(ev){
   var el = ev.target;
+  if(el && el.id === 'searchInput'){
+    var results = document.getElementById('searchResults');
+    if(results){ results.innerHTML = searchResultsHtml(el.value); }
+    return;
+  }
   var key = el.getAttribute ? el.getAttribute('data-draft') : null;
   if(key && APP.publish){
     APP.publish[key] = el.value;
