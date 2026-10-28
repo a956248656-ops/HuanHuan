@@ -1,0 +1,47 @@
+# Dependencies and build output
+node_modules/
+.pnp.*
+.yarn/
+dist/
+build/
+out/
+coverage/
+.cache/
+.parcel-cache/
+.vite/
+.next/
+.nuxt/
+*.tsbuildinfo
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+*.local
+.vscode/
+.idea/
+
+# Credentials and keys
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+id_rsa*
+id_ed25519*
+.npmrc
+
+# Local agent/tooling state (not part of the app)
+.dsh/
+
+# Generated preview, deploy and tunnel artifacts
+preview-url.txt
+public-url.txt
+tunnel-debug.txt
+edgeone-test.txt
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
