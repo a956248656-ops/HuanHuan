@@ -382,8 +382,9 @@ body.nav-hidden .tabbar{transform:translate(-50%,130%);opacity:0;pointer-events:
 
 /* ============ detail ============ */
 .detail-page{padding-bottom:calc(92px + env(safe-area-inset-bottom));background:var(--bg)}
-.detail-author{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.detail-author{display:flex;align-items:center;gap:8px;flex:1;min-width:0;border:0;background:transparent;padding:0;text-align:left;color:inherit}
 .detail-author .av-xs{width:30px;height:30px;font-size:10px}
+.detail-author .author-chev{display:flex;flex:none;color:var(--mut2);margin-left:1px}
 .detail-author-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .follow-btn{
   min-height:32px;padding:0 12px;border-radius:999px;border:1px solid rgba(20,122,76,.45);color:var(--pri);
@@ -2937,6 +2938,33 @@ input,textarea,select{font-family:var(--sans)}
 .recommend-page .feed-h1{color:#fff}
 .recommend-page .feed-sub{color:rgba(255,255,255,.56)}
 .recommend-page .feed-list{padding-top:16px}
+/* recommendation grid view: tap the active 推荐 tab again to toggle */
+.recommend-page .feed-list.reco-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+  padding:12px 16px calc(20px + env(safe-area-inset-bottom));align-items:start
+}
+.recommend-page .reco-grid .feed-card{
+  display:flex;flex-direction:column;margin:0;border-radius:16px;box-shadow:var(--shadow-s)
+}
+.recommend-page .reco-grid .feed-cover{height:auto;aspect-ratio:1/1}
+.recommend-page .reco-grid .feed-cover:before{width:120px;height:120px;left:-32px;top:-46px}
+.recommend-page .reco-grid .feed-body{flex:1;padding:9px 10px 34px;padding-right:10px}
+.recommend-page .reco-grid .feed-title{
+  font-size:13.5px;line-height:1.4;min-height:37px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.recommend-page .reco-grid .feed-meta{
+  margin-top:6px;gap:3px 4px;font-size:9.5px;flex-wrap:wrap
+}
+.recommend-page .reco-grid .feed-name{max-width:64px}
+.recommend-page .reco-grid .feed-stats{
+  width:100%;margin-left:0;margin-top:3px;gap:7px;font-size:9px;justify-content:flex-start
+}
+.recommend-page .reco-grid .cover-emoji{font-size:44px}
+.recommend-page .reco-grid .cat-chip{left:8px;top:8px;font-size:8.5px;padding:2px 5px}
+.recommend-page .reco-grid .cover-note{left:9px;bottom:8px;font-size:8.5px;max-width:80%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recommend-page .reco-grid .rec-swap{width:29px;height:29px;right:8px;bottom:8px;font-size:11px}
+.recommend-page .reco-grid .feed-empty{grid-column:1/-1}
 .page.motion-segment .recommend-page .feed-intro{animation:none!important}
 .page.motion-segment .recommend-page .feed-kicker,
 .page.motion-segment .recommend-page .feed-h1,
@@ -3145,14 +3173,66 @@ input,textarea,select{font-family:var(--sans)}
 .prof-id{margin-top:4px;font-size:11.5px;letter-spacing:-.05px;color:#8E8E93;gap:3px;line-height:1.4}
 .prof-bio{margin:10px 0 0;max-width:100%;font-size:13.5px;line-height:1.55;letter-spacing:-.05px;color:#4A4A4F;word-break:break-word}
 .prof-stats{
-  display:flex;align-items:stretch;gap:0;margin-top:12px;padding:11px 0;
-  border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);
-  font-size:10.5px;letter-spacing:-.05px;color:#8E8E93;text-transform:none;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;
+  margin-top:14px;padding:11px 2px;
+  background:#F7F7FA;border-radius:14px;
+  font-size:10px;letter-spacing:-.05px;color:#8E8E93;text-transform:none;
 }
-.prof-stats span{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
-.prof-stats span+span{border-left:.5px solid var(--line);padding-left:14px}
-.prof-stats b{font-size:18px;line-height:1.15;font-weight:700;letter-spacing:-.3px;color:#111;margin:0}
+.prof-stats span{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center}
+.prof-stats span+span{border-left:.5px solid #E5E5EA;padding-left:0}
+.prof-stats b{font-size:17px;line-height:1.1;font-weight:700;letter-spacing:-.3px;color:#111;margin:0;font-variant-numeric:tabular-nums}
+.prof-stats em{font-style:normal;font-size:10px;line-height:1.2;color:#8E8E93;white-space:nowrap}
 .prof-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.tag.has-cert{padding-right:18px}
+.tag .ck{width:11px;height:11px;top:1px;right:2px;color:var(--pri)}
+.tag .ck svg{width:11px;height:11px}
+
+/* author profile */
+.author-page{padding-bottom:calc(24px + env(safe-area-inset-bottom));background:var(--bg)}
+.author-card{
+  margin:12px 16px 0;padding:18px 16px 14px;background:#fff;border-radius:20px;
+  box-shadow:0 1px 0 rgba(0,0,0,.03)
+}
+.author-top{display:flex;align-items:center;gap:13px;min-width:0}
+.author-top .av-lg{width:64px;height:64px;border-radius:20px;font-size:23px;border:0;box-shadow:none}
+.author-info{flex:1;min-width:0}
+.author-name{display:flex;align-items:center;gap:5px;min-width:0;font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.35px;color:#111}
+.author-name>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.author-verified{width:15px;height:15px;flex:none;display:flex;color:var(--pri)}
+.author-verified svg{width:15px;height:15px}
+.author-meta{font-size:11px;line-height:1.4;color:#8E8E93;margin-top:4px}
+.author-bio{font-size:12.5px;line-height:1.55;color:#6E6E73;margin-top:9px;word-break:break-word}
+.author-stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;
+  margin-top:14px;padding:10px 2px;background:#F7F7FA;border-radius:14px
+}
+.author-stats span{min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.author-stats span+span{border-left:.5px solid #E5E5EA}
+.author-stats b{font-size:17px;line-height:1.1;font-weight:700;color:#111;letter-spacing:-.3px;font-variant-numeric:tabular-nums}
+.author-stats em{font-style:normal;font-size:10px;line-height:1.2;color:#8E8E93;white-space:nowrap}
+.author-tabs{
+  display:flex;gap:26px;margin:14px 16px 0;padding:0 2px;
+  border-bottom:.5px solid #E5E5EA
+}
+.author-tab{
+  position:relative;height:44px;min-height:44px;padding:0;
+  display:flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:#8E8E93;
+  background:transparent;border:0
+}
+.author-tab em{font-style:normal;font-size:9.5px;color:#AEAEB2;font-weight:500;margin-top:1px}
+.author-tab.on{color:#111;font-weight:600}
+.author-tab.on em{color:var(--pri)}
+.author-tab.on:after{
+  content:"";position:absolute;left:50%;bottom:0;width:22px;height:2px;border-radius:2px;
+  background:#111;transform:translateX(-50%)
+}
+.author-content{padding:12px 16px 0}
+.author-content .feed-card{margin-bottom:12px}
+.author-content .swap-row,.author-content .idle-card{margin-bottom:10px}
+.author-empty{
+  padding:34px 18px;text-align:center;background:#fff;border-radius:16px;
+  color:#8E8E93;font-size:12.5px;line-height:1.6
+}
 
 @supports (padding:env(safe-area-inset-top)){
   .profile-head{margin-top:calc(12px + env(safe-area-inset-top))}
@@ -3209,6 +3289,8 @@ var APP = {
   history: [],
   seg: 'swap',
   recoTab: 'recommend',
+  recoGrid: false,
+  authorTab: 'works',
   availableFilter: 'all',
   profileIndex: 0,
   swap: null,
@@ -3420,7 +3502,7 @@ function icon(name, size, cls){
   return '<svg class="ico ' + (cls || '') + '" width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
 }
 function blueCheck(){
-  return '<span class="ck" aria-label="技能核验通过"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m2.3 6.2 2.4 2.4 5-5.2"></path></svg></span>';
+  return '<span class="ck" aria-label="技能核验通过"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8 20 6v5.4c0 5.2-3.4 8.4-8 9.8-4.6-1.4-8-4.6-8-9.8V6l8-3.2Z"></path><path d="m8.2 12.2 2.4 2.4 5.2-5.2"></path></svg></span>';
 }
 function e(v){
   return String(v === null || typeof v === 'undefined' ? '' : v)
@@ -4191,6 +4273,7 @@ function renderRecommend(){
   if(!list.length){
     feeds = '<div class="feed-empty">这一栏还没有内容。<br>去广场看看，或者关注几位同城作者。</div>';
   }
+  var feedClass = 'feed-list stagger' + (APP.recoTab === 'recommend' && APP.recoGrid ? ' reco-grid' : '');
   return '<div class="recommend-page">' +
     '<header class="reco-nav">' +
       '<div class="reco-tabs ink-tabs" data-seg-key="reco" role="tablist" aria-label="推荐信息流">' + tabHtml + '</div>' +
@@ -4202,7 +4285,7 @@ function renderRecommend(){
       '<h1 class="feed-h1">' + e(intro.h) + '</h1>' +
       '<p class="feed-sub">' + e(intro.sub) + '</p>' +
     '</div>' +
-    '<div class="feed-list stagger">' + feeds + '</div>' +
+    '<div class="' + feedClass + '">' + feeds + '</div>' +
   '</div>';
 }
 function searchResultRow(type, id, title, sub, emoji, color){
@@ -4398,6 +4481,15 @@ function renderProfile(){
     if(counts.hasOwnProperty(orders[i].status)){ counts[orders[i].status]++; }
   }
   var pendingN = counts.pending, activeN = counts.deposit + counts.delivery;
+  var availableN = myHave().length;
+  var ratedN = 0, goodN = 0;
+  for(i = 0; i < orders.length; i++){
+    if(orders[i].status === 'done' && num(orders[i].rate) > 0){
+      ratedN++;
+      if(num(orders[i].rate) >= 4){ goodN++; }
+    }
+  }
+  var goodRate = ratedN ? Math.round(goodN / ratedN * 100) : 100;
   var tabs = ['作品','闲置','想换','收藏','喜欢'];
   var tabHtml = '';
   for(i = 0; i < tabs.length; i++){
@@ -4456,7 +4548,13 @@ function renderProfile(){
           '<div class="prof-id"><span>' + e(user.id) + '</span><span class="id-sep">·</span><span>IP 属地 ' + e(user.city) + '</span></div>' +
         '</div>' +
         '<div class="prof-bio">' + e(user.bio) + '</div>' +
-        '<div class="prof-stats"><span><b>' + e(user.fans) + '</b>关注者</span><span><b>' + e(user.follow) + '</b>关注</span><span><b>' + e(user.like) + '</b>喜欢</span></div>' +
+        '<div class="prof-stats">' +
+          '<span><b>' + e(user.follow) + '</b><em>关注</em></span>' +
+          '<span><b>' + e(user.fans) + '</b><em>粉丝</em></span>' +
+          '<span><b>' + e(availableN) + '</b><em>可换</em></span>' +
+          '<span><b>' + e(counts.done) + '</b><em>完成</em></span>' +
+          '<span><b>' + e(goodRate) + '%</b><em>好评率</em></span>' +
+        '</div>' +
         '<div class="prof-tags">' + tagsHtml + '</div>' +
       '</div>' +
     '</header>' +
@@ -4536,7 +4634,11 @@ function renderRecoDetail(){
   return '<div class="detail-page">' +
     '<header class="topbar">' +
       '<button class="icon-btn press" data-act="back" aria-label="返回">' + icon('back', 23) + '</button>' +
-      '<div class="detail-author">' + avatar(r.user, r.userBg, 'av-xs') + '<span class="detail-author-name">' + e(r.user) + '</span></div>' +
+      '<button class="detail-author press" data-act="openAuthor" data-user="' + e(r.user) + '" data-bg="' + e(r.userBg || '#DCE8DD') + '" data-city="' + e(r.city) + '" aria-label="查看作者主页">' +
+        avatar(r.user, r.userBg, 'av-xs') +
+        '<span class="detail-author-name">' + e(r.user) + '</span>' +
+        '<span class="author-chev">' + icon('chevron', 12) + '</span>' +
+      '</button>' +
       '<button class="follow-btn press ' + (r.followed ? 'on' : '') + '" data-act="toggleFollow" data-id="' + e(r.id) + '">' + followText + '</button>' +
     '</header>' +
     '<div class="gallery"><div class="gallery-scroll" id="recoGallery">' + slideHtml + '</div><div class="gal-dots" id="recoDots">' + dots + '</div></div>' +
@@ -4560,6 +4662,99 @@ function renderRecoDetail(){
       '<button class="swap-fab" data-act="openSwap" data-target="' + e(target ? target.id : '') + '" aria-label="发起互换">换</button>' +
       '<div class="comment-box"><input id="commentInput" maxlength="80" placeholder="说点什么…" aria-label="评论内容"><button class="comment-send" data-act="sendComment" data-id="' + e(r.id) + '" aria-label="发送评论">' + icon('send', 17) + '</button></div>' +
     '</div>' +
+  '</div>';
+}
+
+/* ============ author profile ============ */
+function authorStats(name){
+  var me = getUser();
+  if(name === me.name){
+    var orders = getOrders(), done = 0, rated = 0, good = 0;
+    for(var i = 0; i < orders.length; i++){
+      if(orders[i].status === 'done'){
+        done++;
+        if(num(orders[i].rate) > 0){
+          rated++;
+          if(num(orders[i].rate) >= 4){ good++; }
+        }
+      }
+    }
+    return {
+      fans: me.fans,
+      follow: me.follow,
+      done: done,
+      rate: rated ? Math.round(good / rated * 100) : 100
+    };
+  }
+  var seed = hashStr(name);
+  return {
+    fans: 128 + seed % 860,
+    follow: 32 + hashStr(name + '_follow') % 180,
+    done: 4 + hashStr(name + '_done') % 28,
+    rate: 96 + hashStr(name + '_rate') % 4
+  };
+}
+function renderAuthorProfile(){
+  var name = APP.params.user || getUser().name;
+  var bg = APP.params.bg || '#DCE8DD';
+  var city = APP.params.city || (name === getUser().name ? getUser().city : '北京');
+  var stats = authorStats(name);
+  var me = getUser();
+  var posts = getPosts(), recs = getInterest();
+  var works = [], available = [], idle = [], i;
+  for(i = 0; i < recs.length; i++){
+    if(recs[i].user === name){ works.push(recs[i]); }
+  }
+  for(i = 0; i < posts.length; i++){
+    if(posts[i].user !== name){ continue; }
+    if(posts[i].sale || posts[i].status === 'sale'){ idle.push(posts[i]); }
+    else if(posts[i].type === 'have' && posts[i].status === 'available'){ available.push(posts[i]); }
+  }
+  var tab = APP.authorTab || 'works';
+  if(tab !== 'works' && tab !== 'available' && tab !== 'idle'){ tab = 'works'; }
+  var body = '', j;
+  if(tab === 'works'){
+    for(j = 0; j < works.length; j++){ body += feedCard(works[j]); }
+    if(!body){ body = '<div class="author-empty">还没有发布作品。</div>'; }
+  }else if(tab === 'available'){
+    for(j = 0; j < available.length; j++){ body += swapRow(available[j]); }
+    if(!body){ body = '<div class="author-empty">暂时没有可换的物品或技能。</div>'; }
+  }else{
+    for(j = 0; j < idle.length; j++){ body += idleCard(idle[j]); }
+    if(!body){ body = '<div class="author-empty">暂时没有在售闲置。</div>'; }
+  }
+  var tabHtml = '';
+  var tabs = [
+    {k:'works', label:'作品', n:works.length},
+    {k:'available', label:'可换', n:available.length},
+    {k:'idle', label:'闲置', n:idle.length}
+  ];
+  for(i = 0; i < tabs.length; i++){
+    tabHtml += '<button class="author-tab ' + (tab === tabs[i].k ? 'on' : '') + '" data-act="authorTab" data-tab="' + tabs[i].k + '">' +
+      tabs[i].label + '<em>' + tabs[i].n + '</em></button>';
+  }
+  var shield = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 20 6v5.4c0 5.2-3.4 8.4-8 9.8-4.6-1.4-8-4.6-8-9.8V6l8-3.2Z"></path><path d="m8.2 12.2 2.4 2.4 5.2-5.2"></path></svg>';
+  var bio = name === me.name ? me.bio : '在换换分享旧物、手艺和生活。';
+  return '<div class="author-page">' +
+    topbar('作者主页') +
+    '<section class="author-card">' +
+      '<div class="author-top">' +
+        '<div class="av-lg" style="background:' + e(bg) + '">' + e(name.charAt(0)) + '</div>' +
+        '<div class="author-info">' +
+          '<div class="author-name"><span>' + e(name) + '</span><span class="author-verified">' + shield + '</span></div>' +
+          '<div class="author-meta">换换作者 · IP 属地 ' + e(city) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="author-bio">' + e(bio) + '</div>' +
+      '<div class="author-stats">' +
+        '<span><b>' + e(stats.fans) + '</b><em>粉丝</em></span>' +
+        '<span><b>' + e(stats.follow) + '</b><em>关注</em></span>' +
+        '<span><b>' + e(stats.rate) + '%</b><em>好评率</em></span>' +
+        '<span><b>' + e(stats.done) + '</b><em>完成</em></span>' +
+      '</div>' +
+    '</section>' +
+    '<div class="author-tabs" role="tablist" aria-label="作者内容">' + tabHtml + '</div>' +
+    '<div class="author-content">' + body + '</div>' +
   '</div>';
 }
 
@@ -5083,6 +5278,7 @@ ROUTE_FUNCS = {
   profile: renderProfile,
   swapcenter: renderSwapCenter,
   recoDetail: renderRecoDetail,
+  authorProfile: renderAuthorProfile,
   publish: renderPublish,
   cart: renderCart,
   checkout: renderCheckout,
@@ -5650,6 +5846,19 @@ ACTIONS.searchOpenReco = function(el){
   closeOverlay();
   navigate('recoDetail', {id:id});
 };
+ACTIONS.openAuthor = function(el){
+  closeOverlay();
+  APP.authorTab = 'works';
+  navigate('authorProfile', {
+    user: el.getAttribute('data-user') || '',
+    bg: el.getAttribute('data-bg') || '#DCE8DD',
+    city: el.getAttribute('data-city') || ''
+  });
+};
+ACTIONS.authorTab = function(el){
+  APP.authorTab = el.getAttribute('data-tab') || 'works';
+  refreshPage(true);
+};
 ACTIONS.goCart = function(){ closeOverlay(); navigate('cart'); };
 ACTIONS.goCheckout = function(){ closeOverlay(); navigate('checkout'); };
 ACTIONS.goPrivacy = function(){ closeOverlay(); navigate('privacy'); };
@@ -5687,8 +5896,18 @@ ACTIONS.filterAvailable = function(el){
   refreshPage(true);
 };
 ACTIONS.recoTab = function(el){
+  var tab = el.getAttribute('data-tab') || 'recommend';
   rememberSeg('reco');
-  APP.recoTab = el.getAttribute('data-tab') || 'recommend';
+  if(tab === APP.recoTab && tab === 'recommend'){
+    APP.recoGrid = !APP.recoGrid;
+    APP.motion = 'segment';
+    renderCurrent();
+    showToast(APP.recoGrid ? '已切换为双列' : '已切换为单列');
+    window.scrollTo(0, 0);
+    return;
+  }
+  if(tab !== 'recommend'){ APP.recoGrid = false; }
+  APP.recoTab = tab;
   if(APP.recoTab === 'follow'){
     var u = getUser();
     u.followDotSeen = true;
