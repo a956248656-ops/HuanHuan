@@ -385,6 +385,10 @@ body.nav-hidden .tabbar{transform:translate(-50%,130%);opacity:0;pointer-events:
 .detail-author{display:flex;align-items:center;gap:8px;flex:1;min-width:0;border:0;background:transparent;padding:0;text-align:left;color:inherit}
 .detail-author .av-xs{width:30px;height:30px;font-size:10px}
 .detail-author .author-chev{display:flex;flex:none;color:var(--mut2);margin-left:1px}
+.detail-author-wrap{display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+.detail-author-wrap .detail-author{flex:0 1 auto;min-width:0}
+.detail-follow{height:28px;min-height:28px;padding:0 9px;font-size:10.5px;margin-left:0;flex:none}
+.detail-share{flex:none}
 .detail-author-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .follow-btn{
   min-height:32px;padding:0 12px;border-radius:999px;border:1px solid rgba(20,122,76,.45);color:var(--pri);
@@ -2167,6 +2171,10 @@ input,textarea,select{font-family:var(--sans)}
 
 /* available list */
 .swap-list{background:#fff;border:0;border-radius:12px;box-shadow:none;overflow:hidden;padding:0 14px}
+.square-page .section>.swap-list{margin-left:-16px;margin-right:-16px;border-radius:0;padding:0 16px}
+@media (min-width:700px){
+  .square-page .section>.swap-list{margin-left:-28px;margin-right:-28px;padding-left:28px;padding-right:28px}
+}
 .swap-row{min-height:68px;padding:10px 0;gap:12px;border-bottom:.5px solid var(--line);background:transparent}
 .swap-row:last-child{border-bottom:0}
 .swap-row:active{transform:none;background:rgba(118,118,128,.06)}
@@ -2260,7 +2268,7 @@ input,textarea,select{font-family:var(--sans)}
 .feed-empty{background:#fff;border:0;border-radius:16px;box-shadow:var(--shadow-s);padding:28px 16px;font-size:13px;color:var(--mut)}
 
 /* content detail */
-.detail-page{background:var(--bg);padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+.detail-page{background:#fff;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
 .detail-author .av-xs{width:30px;height:30px;font-size:10px}
 .detail-author-name{font-size:14px;font-weight:600;letter-spacing:-.1px}
 .gallery{background:#fff;border-bottom:0}
@@ -2279,7 +2287,7 @@ input,textarea,select{font-family:var(--sans)}
 .topic-row{gap:6px;margin-top:14px;padding-top:0;border-top:0}
 .topic-static{background:rgba(118,118,128,.10);color:#3C3C43;border:0;border-radius:999px;padding:4px 9px;font-size:12px;letter-spacing:-.05px}
 .detail-date{font-size:12px;color:var(--mut);margin-top:12px;letter-spacing:-.05px}
-.comment-block{margin:12px 16px 0;background:#fff;border:0;border-radius:12px;padding:14px;box-shadow:var(--shadow-s)}
+.comment-block{margin:12px 0 0;background:#fff;border:0;border-radius:0;padding:14px 16px;box-shadow:none;border-top:.5px solid var(--line)}
 .comment-head{margin-bottom:4px}
 .comment-head h3{font-family:var(--sans);font-size:17px;font-weight:700;letter-spacing:-.2px}
 .comment-head span{font-size:11px;color:var(--mut)}
@@ -2300,6 +2308,14 @@ input,textarea,select{font-family:var(--sans)}
 .comment-box{width:calc(50% - 44px);background:rgba(118,118,128,.12);border:0;border-radius:999px;height:38px;padding:0 4px 0 12px}
 .comment-box input{font-size:14px;color:#000}
 .comment-send{width:34px;height:34px;min-height:34px;color:var(--pri)}
+.reco-bar{gap:8px;padding-left:12px;padding-right:12px}
+.reco-bar .comment-box{flex:1;width:auto;min-width:0;margin-left:0}
+.reco-bar .swap-fab{
+  position:relative;left:auto;top:auto;transform:none;flex:none;
+  width:46px;height:46px;border:0;margin-left:0;font-size:14px;
+  box-shadow:0 3px 10px rgba(20,122,76,.22)
+}
+.reco-bar .swap-fab:active{transform:scale(.94)}
 
 /* profile */
 .profile-page{background:var(--bg);padding-bottom:8px}
@@ -2585,6 +2601,28 @@ input,textarea,select{font-family:var(--sans)}
 .msg-head h1{font-family:var(--sans);font-size:34px;font-weight:700;letter-spacing:-.6px;color:#000}
 .msg-head p{font-size:13px;color:var(--mut);margin-top:0;letter-spacing:-.05px}
 .msg-head .text-btn{font-size:13px;color:var(--pri)}
+.msg-cats{
+  display:flex;gap:22px;overflow-x:auto;padding:0 16px;margin:0 0 10px;
+  border-bottom:.5px solid #E5E5EA;scrollbar-width:none;overscroll-behavior-x:contain;
+  background:var(--bg);
+}
+.msg-cats::-webkit-scrollbar{display:none}
+.msg-cat{
+  position:relative;flex:none;height:40px;min-height:40px;padding:0;border:0;background:transparent;
+  display:flex;align-items:center;gap:3px;white-space:nowrap;
+  font-size:13px;font-weight:500;color:#8E8E93;letter-spacing:-.1px;
+  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:pan-x
+}
+.msg-cat.on{color:#111;font-weight:600}
+.msg-cat.on:after{
+  content:"";position:absolute;left:50%;bottom:0;width:18px;height:2px;border-radius:2px;
+  background:#111;transform:translateX(-50%)
+}
+.msg-cat.dragging{opacity:.55;transform:scale(.96);z-index:2}
+.msg-empty{padding:44px 22px 48px;text-align:center;color:var(--mut)}
+.msg-empty-ico{width:52px;height:52px;border-radius:17px;background:#F2F2F7;color:#AEAEB2;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.msg-empty b{display:block;font-size:15px;line-height:1.3;font-weight:600;color:#111}
+.msg-empty span{display:block;font-size:12px;line-height:1.55;margin-top:5px;color:var(--mut)}
 .msg-assist{background:#fff;border:0;border-radius:12px;padding:12px;margin:0 16px 12px;width:calc(100% - 32px);box-shadow:0 1px 2px rgba(0,0,0,.025);gap:10px}
 .msg-assist-ico{width:38px;height:38px;background:var(--pri-ll);border:0;border-radius:10px;color:var(--pri)}
 .msg-assist-main b{font-family:var(--sans);font-size:15px;font-weight:600;color:#000;letter-spacing:-.15px}
@@ -3004,9 +3042,15 @@ input,textarea,select{font-family:var(--sans)}
 .square-page .sq-lead{color:#6E6E73}
 .square-page .segbar.ink-tabs{
   background:#fff;border:0;border-bottom:.5px solid #E5E5EA;border-radius:0;
-  margin:0;padding:0 16px;height:50px;
+  margin:0;padding:0 56px 0 16px;height:50px;
   display:flex;justify-content:flex-start;gap:32px;
 }
+.square-page .seg-search{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;min-height:40px;border:0;border-radius:50%;
+  background:transparent;color:#111;display:flex;align-items:center;justify-content:center;
+}
+.square-page .seg-search:active{opacity:.5}
 .square-page .ink-tabs .seg{
   flex:0 0 auto;height:50px;min-height:50px;padding:0;
   font-size:15.5px;font-weight:500;letter-spacing:-.2px;color:#6E6E73;
@@ -3044,27 +3088,49 @@ input,textarea,select{font-family:var(--sans)}
 .recommend-page .reco-nav .icon-btn .red-dot{box-shadow:0 0 0 2.5px #fff!important}
 .recommend-page .feed-intro{background:#fff;color:#111;padding:18px 16px 20px;border:0;border-bottom:.5px solid #E5E5EA}
 
-/* search sheet */
+/* search — instagram-style discovery */
+.search-sheet{padding-left:0;padding-right:0;background:#fff}
+.search-top{
+  display:flex;align-items:center;gap:10px;flex:none;
+  padding:8px 16px 10px;background:#fff;border-bottom:.5px solid #EFEFEF;
+  position:sticky;top:0;z-index:2
+}
 .search-field{
-  display:flex;align-items:center;gap:8px;flex:none;
-  height:46px;padding:0 12px;margin:8px 0 4px;
-  background:#F2F2F7;border-radius:12px;color:#8E8E93
+  display:flex;align-items:center;gap:7px;flex:1;min-width:0;
+  height:40px;padding:0 11px;margin:0;
+  background:#EFEFEF;border-radius:10px;color:#111
 }
 .search-field .ico{display:flex;flex:none;color:#8E8E93}
 .search-field input{
-  flex:1;min-width:0;height:46px;border:0;outline:0;background:transparent;
+  flex:1;min-width:0;height:40px;border:0;outline:0;background:transparent;
   color:#111;font-size:16px;letter-spacing:-.2px
 }
 .search-field input::placeholder{color:#8E8E93}
-.search-results{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px 0 calc(12px + env(safe-area-inset-bottom))}
-.search-group-title{font-size:12px;font-weight:600;letter-spacing:-.05px;color:#8E8E93;padding:13px 2px 4px}
-.search-result{display:flex;align-items:center;gap:10px;width:100%;padding:10px 2px;border-bottom:.5px solid #E5E5EA;text-align:left}
+.search-field input::-webkit-search-cancel-button{display:none}
+.search-clear{
+  display:none;width:22px;height:22px;min-height:22px;flex:none;padding:0;border:0;
+  border-radius:50%;background:#C7C7CC;color:#fff;align-items:center;justify-content:center
+}
+.search-field.has-value .search-clear{display:flex}
+.search-cancel{flex:none;height:40px;padding:0 1px;border:0;background:transparent;color:#111;font-size:15px;font-weight:500}
+.search-results{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px calc(18px + env(safe-area-inset-bottom))}
+.search-discovery{padding-top:4px}
+.search-discovery-title{font-size:14px;font-weight:600;letter-spacing:-.15px;color:#111;margin:18px 0 10px}
+.search-chips{display:flex;flex-wrap:wrap;gap:8px}
+.search-chip{
+  height:34px;padding:0 13px;border:0;border-radius:10px;
+  background:#F2F2F7;color:#111;font-size:13px;font-weight:500;letter-spacing:-.1px
+}
+.search-chip.recent{background:#fff;border:.5px solid #E5E5EA}
+.search-discovery-note{font-size:12px;line-height:1.6;color:#8E8E93;margin-top:22px}
+.search-group-title{font-size:13px;font-weight:600;letter-spacing:-.1px;color:#8E8E93;padding:16px 0 5px}
+.search-result{display:flex;align-items:center;gap:11px;width:100%;padding:9px 0;border-bottom:.5px solid #EFEFEF;text-align:left}
 .search-result:last-child{border-bottom:0}
-.search-thumb{width:44px;height:44px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;font-size:21px}
+.search-thumb{width:46px;height:46px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:22px}
 .sr-main{flex:1;min-width:0}
-.sr-title{display:block;font-size:14px;line-height:1.35;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-title{display:block;font-size:14.5px;line-height:1.35;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sr-sub{display:block;font-size:11.5px;line-height:1.35;color:#8E8E93;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.search-result .chev{display:flex;flex:none;color:#C7C7CC}
+.search-result .chev{display:none}
 .search-empty{padding:36px 16px;text-align:center;color:#8E8E93;font-size:13px;line-height:1.6}
 .recommend-page .feed-kicker{color:#8E8E93}
 .recommend-page .feed-h1{color:#111}
@@ -3100,16 +3166,19 @@ input,textarea,select{font-family:var(--sans)}
 }
 .tab-publish .tab-label{font-size:10px;font-weight:600;line-height:1;color:var(--pri)}
 .tab-dot{
-  top:9px;left:calc(50% + 13px);right:auto;
-  width:18px;height:18px;min-width:18px;padding:0;
+  top:9px;left:calc(50% + 12px);right:auto;
+  width:auto;height:16px;min-width:16px;padding:0 4.5px;
   display:inline-flex;align-items:center;justify-content:center;
-  border-radius:50%!important;line-height:1;font-size:9px;font-weight:600;
-  background:#FF3B30;color:#fff;box-shadow:0 0 0 2px #fff;
+  border-radius:999px!important;line-height:16px;font-size:9px;font-weight:600;
+  letter-spacing:0;background:#FF2D55;color:#fff;
+  box-shadow:0 1px 3px rgba(255,45,85,.28);
 }
 .msg-badge{
-  width:18px;height:18px;min-width:18px;padding:0;
+  width:auto;height:17px;min-width:17px;padding:0 5px;
   display:inline-flex;align-items:center;justify-content:center;
-  border-radius:50%!important;line-height:1;font-size:9px;font-weight:600;
+  border-radius:999px!important;line-height:17px;font-size:9.5px;font-weight:600;
+  letter-spacing:0;background:#FF2D55;color:#fff;
+  box-shadow:0 1px 2px rgba(255,45,85,.2);
 }
 
 /* profile — social dossier card */
@@ -3202,6 +3271,19 @@ input,textarea,select{font-family:var(--sans)}
 .author-verified svg{width:15px;height:15px}
 .author-meta{font-size:11px;line-height:1.4;color:#8E8E93;margin-top:4px}
 .author-bio{font-size:12.5px;line-height:1.55;color:#6E6E73;margin-top:9px;word-break:break-word}
+.author-actions{display:flex;gap:8px;margin-top:12px}
+.author-action{
+  height:34px;min-height:34px;padding:0 16px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid rgba(20,122,76,.24);background:var(--pri-ll);color:var(--pri-d);
+  font-size:12px;font-weight:600;letter-spacing:-.05px
+}
+.author-action.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.author-action.ghost{background:#F2F2F7;border-color:transparent;color:#111}
+.author-msg-to{display:flex;align-items:center;gap:9px;padding:2px 0 12px}
+.author-msg-to .av-msg{width:38px;height:38px;font-size:12px}
+.author-msg-to b{display:block;font-size:14px;font-weight:600;color:#111}
+.author-msg-to span{display:block;font-size:11px;color:#8E8E93;margin-top:2px}
 .author-stats{
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;
   margin-top:14px;padding:10px 2px;background:#F7F7FA;border-radius:14px
@@ -3291,6 +3373,7 @@ var APP = {
   recoTab: 'recommend',
   recoGrid: false,
   authorTab: 'works',
+  msgCat: 'all',
   availableFilter: 'all',
   profileIndex: 0,
   swap: null,
@@ -3982,6 +4065,30 @@ function ensureMyHave(){
 
 /* ============ render helpers ============ */
 var NAV_ROUTES = {square:1, recommend:1, messages:1, profile:1};
+var MSG_CAT_DEFS = [
+  {k:'all', label:'全部', ico:'bell'},
+  {k:'system', label:'系统', ico:'shield'},
+  {k:'interaction', label:'互动', ico:'swap2'},
+  {k:'dm', label:'私信', ico:'chat'},
+  {k:'like', label:'点赞', ico:'heart'},
+  {k:'comment', label:'评论', ico:'comment'},
+  {k:'fan', label:'粉丝', ico:'user'}
+];
+function getMsgCats(){
+  var saved = getData('msgCatOrder', null);
+  var byKey = {}, out = [], i, def;
+  for(i = 0; i < MSG_CAT_DEFS.length; i++){ byKey[MSG_CAT_DEFS[i].k] = MSG_CAT_DEFS[i]; }
+  if(Array.isArray(saved)){
+    for(i = 0; i < saved.length; i++){
+      def = byKey[saved[i]];
+      if(def && out.indexOf(def) === -1){ out.push(def); }
+    }
+  }
+  for(i = 0; i < MSG_CAT_DEFS.length; i++){
+    if(out.indexOf(MSG_CAT_DEFS[i]) === -1){ out.push(MSG_CAT_DEFS[i]); }
+  }
+  return out;
+}
 var ROUTE_FUNCS = {};
 
 function topbar(title, rightHtml, leftHtml){
@@ -4231,7 +4338,9 @@ function renderSquare(){
         '<p class="sq-lead">把闲置，换成刚刚好。</p>' +
       '</div>' +
     '</header>' +
-    '<div class="segbar ink-tabs" data-seg-key="square" role="tablist" aria-label="广场板块">' + segHtml + '</div>' +
+    '<div class="segbar ink-tabs" data-seg-key="square" role="tablist" aria-label="广场板块">' + segHtml +
+      '<button class="seg-search press" data-act="openSearch" aria-label="搜索">' + icon('search', 20) + '</button>' +
+    '</div>' +
     '<button class="trustline press" data-act="openPrivacy">' +
       '<span class="tl-ico">' + icon('shield', 16) + '</span>' +
       '<span class="tl-main"><b>只做撮合与存证</b><em>不参与交易 · 不沉淀资金</em></span>' +
@@ -4288,6 +4397,35 @@ function renderRecommend(){
     '<div class="' + feedClass + '">' + feeds + '</div>' +
   '</div>';
 }
+function addSearchHistory(q){
+  q = String(q || '').trim();
+  if(!q){ return; }
+  var list = getData('searchHistory', []);
+  if(!Array.isArray(list)){ list = []; }
+  var next = [q];
+  for(var i = 0; i < list.length; i++){ if(list[i] !== q && next.length < 6){ next.push(list[i]); } }
+  setData('searchHistory', next);
+}
+function searchDiscoveryHtml(){
+  var history = getData('searchHistory', []);
+  if(!Array.isArray(history)){ history = []; }
+  var chips = ['相机', '耳机', '钢琴陪练', '露营', '咖啡机', '同城'];
+  var out = '';
+  if(history.length){
+    out += '<div class="search-discovery-title">最近搜索</div><div class="search-chips">';
+    for(var i = 0; i < history.length; i++){
+      out += '<button class="search-chip recent" data-act="searchChip" data-q="' + e(history[i]) + '">' + e(history[i]) + '</button>';
+    }
+    out += '</div>';
+  }
+  out += '<div class="search-discovery-title">热门搜索</div><div class="search-chips">';
+  for(var j = 0; j < chips.length; j++){
+    out += '<button class="search-chip" data-act="searchChip" data-q="' + e(chips[j]) + '">' + e(chips[j]) + '</button>';
+  }
+  out += '</div>';
+  out += '<div class="search-discovery-note">搜索闲置、技能、城市或平台精选</div>';
+  return '<div class="search-discovery">' + out + '</div>';
+}
 function searchResultRow(type, id, title, sub, emoji, color){
   var act = type === 'mall' ? 'searchOpenMall' : (type === 'reco' ? 'searchOpenReco' : 'openListing');
   return '<button class="search-result" data-act="' + act + '" data-id="' + e(id) + '">' +
@@ -4299,7 +4437,7 @@ function searchResultRow(type, id, title, sub, emoji, color){
 function searchResultsHtml(q){
   var query = String(q || '').trim().toLowerCase();
   if(!query){
-    return '<div class="search-empty">搜索闲置、技能、城市或精选</div>';
+    return searchDiscoveryHtml();
   }
   var posts = getPosts(), mall = getMall(), recs = getInterest();
   var out = '', rows = '', i, item, text;
@@ -4356,30 +4494,57 @@ function feedCard(r){
   '</article>';
 }
 function renderMessages(){
-  var list = getMessages();
+  var all = getMessages();
   var unread = unreadCount();
   var pending = 0, orders = getOrders();
   for(var p = 0; p < orders.length; p++){ if(orders[p].status === 'pending'){ pending++; } }
+  var cats = getMsgCats();
+  var cat = APP.msgCat || 'all', catDef = null, i;
+  for(i = 0; i < cats.length; i++){ if(cats[i].k === cat){ catDef = cats[i]; break; } }
+  if(!catDef){ cat = 'all'; catDef = cats[0]; }
+  var visible = [];
+  for(i = 0; i < all.length; i++){
+    var m = all[i];
+    var keep = cat === 'all' ||
+      (cat === 'system' && !!m.system) ||
+      (cat === 'interaction' && !m.system) ||
+      (cat === 'dm' && !m.system);
+    if(keep){ visible.push(m); }
+  }
   var rows = '';
-  for(var i = 0; i < list.length; i++){
-    var m = list[i];
-    var isSys = !!m.system;
-    rows += '<button class="msg-row ' + (isSys ? 'msg-system' : '') + '" data-act="openThread" data-id="' + e(m.id) + '">' +
-      '<span class="av-msg" style="background:' + e(m.bg) + '">' + e(m.avatar || m.name.charAt(0)) + (m.unread ? '<span class="unread-dot"></span>' : '') + '</span>' +
+  for(i = 0; i < visible.length; i++){
+    var msg = visible[i];
+    var isSys = !!msg.system;
+    rows += '<button class="msg-row ' + (isSys ? 'msg-system' : '') + '" data-act="openThread" data-id="' + e(msg.id) + '">' +
+      '<span class="av-msg" style="background:' + e(msg.bg) + '">' + e(msg.avatar || msg.name.charAt(0)) + (msg.unread ? '<span class="unread-dot"></span>' : '') + '</span>' +
       '<span class="msg-main">' +
-        '<span class="msg-line1"><span class="msg-name">' + e(m.name) + '</span>' + (m.unread ? '<span class="msg-badge">' + (m.unread > 9 ? '9+' : m.unread) + '</span>' : '') + '<span class="msg-time">' + e(m.time) + '</span></span>' +
-        '<span class="msg-preview ' + (m.unread ? 'unread' : '') + '">' + e(m.preview) + '</span>' +
+        '<span class="msg-line1"><span class="msg-name">' + e(msg.name) + '</span>' + (msg.unread ? '<span class="msg-badge">' + (msg.unread > 9 ? '9+' : msg.unread) + '</span>' : '') + '<span class="msg-time">' + e(msg.time) + '</span></span>' +
+        '<span class="msg-preview ' + (msg.unread ? 'unread' : '') + '">' + e(msg.preview) + '</span>' +
       '</span>' +
     '</button>';
   }
-  if(!list.length){
-    rows = '<div class="feed-empty">还没有消息。去发起一次互换，消息会出现在这里。</div>';
+  if(!visible.length){
+    var emptyText = {
+      all:'还没有消息。去发起一次互换，消息会出现在这里。',
+      system:'系统通知会出现在这里。',
+      interaction:'互动提醒会出现在这里。',
+      dm:'私信会出现在这里。',
+      like:'收到点赞后会出现在这里。',
+      comment:'收到评论后会出现在这里。',
+      fan:'新增粉丝后会出现在这里。'
+    }[cat] || '这里还没有消息。';
+    rows = '<div class="msg-empty"><div class="msg-empty-ico">' + icon(catDef.ico, 22) + '</div><b>' + e(catDef.label) + '暂无消息</b><span>' + e(emptyText) + '</span></div>';
+  }
+  var catHtml = '';
+  for(i = 0; i < cats.length; i++){
+    catHtml += '<button class="msg-cat ' + (cat === cats[i].k ? 'on' : '') + '" data-act="msgCat" data-cat="' + cats[i].k + '">' + cats[i].label + '</button>';
   }
   return '<div class="messages-page">' +
     '<header class="msg-head">' +
       '<div><h1>消息</h1><p>' + (unread ? unread + ' 条未读，慢慢看' : '都看完了，去换点新东西') + '</p></div>' +
       '<button class="text-btn muted" data-act="readAll">全部已读</button>' +
     '</header>' +
+    '<div class="msg-cats" id="msgCats" role="tablist" aria-label="消息分类">' + catHtml + '</div>' +
     '<button class="msg-assist press" data-act="openCenter" data-tab="pending">' +
       '<span class="msg-assist-ico">' + icon('swap2', 20) + '</span>' +
       '<span class="msg-assist-main"><b>换换小助手</b><span>' + (pending ? pending + ' 个提案正在等待对方确认，平台只做撮合与存证。' : '当前没有待确认提案，去看看新的配对。') + '</span></span>' +
@@ -4634,12 +4799,15 @@ function renderRecoDetail(){
   return '<div class="detail-page">' +
     '<header class="topbar">' +
       '<button class="icon-btn press" data-act="back" aria-label="返回">' + icon('back', 23) + '</button>' +
-      '<button class="detail-author press" data-act="openAuthor" data-user="' + e(r.user) + '" data-bg="' + e(r.userBg || '#DCE8DD') + '" data-city="' + e(r.city) + '" aria-label="查看作者主页">' +
-        avatar(r.user, r.userBg, 'av-xs') +
-        '<span class="detail-author-name">' + e(r.user) + '</span>' +
-        '<span class="author-chev">' + icon('chevron', 12) + '</span>' +
-      '</button>' +
-      '<button class="follow-btn press ' + (r.followed ? 'on' : '') + '" data-act="toggleFollow" data-id="' + e(r.id) + '">' + followText + '</button>' +
+      '<div class="detail-author-wrap">' +
+        '<button class="detail-author press" data-act="openAuthor" data-user="' + e(r.user) + '" data-bg="' + e(r.userBg || '#DCE8DD') + '" data-city="' + e(r.city) + '" aria-label="查看作者主页">' +
+          avatar(r.user, r.userBg, 'av-xs') +
+          '<span class="detail-author-name">' + e(r.user) + '</span>' +
+          '<span class="author-chev">' + icon('chevron', 12) + '</span>' +
+        '</button>' +
+        '<button class="follow-btn detail-follow press ' + (r.followed ? 'on' : '') + '" data-act="toggleFollow" data-id="' + e(r.id) + '">' + followText + '</button>' +
+      '</div>' +
+      '<button class="icon-btn detail-share press" data-act="shareReco" data-id="' + e(r.id) + '" aria-label="转发作品">' + icon('share', 20) + '</button>' +
     '</header>' +
     '<div class="gallery"><div class="gallery-scroll" id="recoGallery">' + slideHtml + '</div><div class="gal-dots" id="recoDots">' + dots + '</div></div>' +
     '<div class="detail-content">' +
@@ -4659,13 +4827,17 @@ function renderRecoDetail(){
         '<button class="bar-icon' + likedCls + '" data-act="likeReco" data-id="' + e(r.id) + '" aria-label="喜欢">' + icon('heart', 21) + '<small id="likeCount">' + num(r.likes) + '</small></button>' +
         '<button class="bar-icon' + savedCls + '" data-act="saveReco" data-id="' + e(r.id) + '" aria-label="收藏">' + icon('bookmark', 20) + '<small>收藏</small></button>' +
       '</div>' +
-      '<button class="swap-fab" data-act="openSwap" data-target="' + e(target ? target.id : '') + '" aria-label="发起互换">换</button>' +
       '<div class="comment-box"><input id="commentInput" maxlength="80" placeholder="说点什么…" aria-label="评论内容"><button class="comment-send" data-act="sendComment" data-id="' + e(r.id) + '" aria-label="发送评论">' + icon('send', 17) + '</button></div>' +
+      '<button class="swap-fab" data-act="openSwap" data-target="' + e(target ? target.id : '') + '" aria-label="发起互换">换</button>' +
     '</div>' +
   '</div>';
 }
 
 /* ============ author profile ============ */
+function isAuthorFollowed(name){
+  var map = getData('authorFollows', {});
+  return !!(map && map[name]);
+}
 function authorStats(name){
   var me = getUser();
   if(name === me.name){
@@ -4700,6 +4872,8 @@ function renderAuthorProfile(){
   var city = APP.params.city || (name === getUser().name ? getUser().city : '北京');
   var stats = authorStats(name);
   var me = getUser();
+  var followed = isAuthorFollowed(name);
+  var isSelf = name === me.name;
   var posts = getPosts(), recs = getInterest();
   var works = [], available = [], idle = [], i;
   for(i = 0; i < recs.length; i++){
@@ -4717,7 +4891,7 @@ function renderAuthorProfile(){
     for(j = 0; j < works.length; j++){ body += feedCard(works[j]); }
     if(!body){ body = '<div class="author-empty">还没有发布作品。</div>'; }
   }else if(tab === 'available'){
-    for(j = 0; j < available.length; j++){ body += swapRow(available[j]); }
+    for(j = 0; j < available.length; j++){ body += availableRow(available[j]); }
     if(!body){ body = '<div class="author-empty">暂时没有可换的物品或技能。</div>'; }
   }else{
     for(j = 0; j < idle.length; j++){ body += idleCard(idle[j]); }
@@ -4746,6 +4920,11 @@ function renderAuthorProfile(){
         '</div>' +
       '</div>' +
       '<div class="author-bio">' + e(bio) + '</div>' +
+      (isSelf ? '' :
+        '<div class="author-actions">' +
+          '<button class="author-action ' + (followed ? 'on' : '') + '" data-act="followAuthor" data-user="' + e(name) + '">' + (followed ? '已关注' : '+ 关注') + '</button>' +
+          '<button class="author-action ghost" data-act="messageAuthor" data-user="' + e(name) + '" data-bg="' + e(bg) + '">私信</button>' +
+        '</div>') +
       '<div class="author-stats">' +
         '<span><b>' + e(stats.fans) + '</b><em>粉丝</em></span>' +
         '<span><b>' + e(stats.follow) + '</b><em>关注</em></span>' +
@@ -5315,6 +5494,82 @@ function fitMatchTitles(){
     }
   }
 }
+var msgCatDragTimer = null;
+var msgCatDragEl = null;
+var msgCatJustDragged = false;
+function saveMsgCatOrder(){
+  var bar = document.getElementById('msgCats');
+  if(!bar){ return; }
+  var order = [];
+  var tabs = bar.querySelectorAll('.msg-cat');
+  for(var i = 0; i < tabs.length; i++){ order.push(tabs[i].getAttribute('data-cat')); }
+  setData('msgCatOrder', order);
+}
+function bindMsgCatDrag(){
+  var bar = document.getElementById('msgCats');
+  if(!bar){ return; }
+  var tabs = bar.querySelectorAll('.msg-cat');
+  for(var i = 0; i < tabs.length; i++){
+    (function(el){
+      if(el.__msgCatBound){ return; }
+      el.__msgCatBound = true;
+      el.addEventListener('contextmenu', function(ev){ ev.preventDefault(); });
+      el.addEventListener('pointerdown', function(ev){
+        if(ev.button !== undefined && ev.button !== 0){ return; }
+        if(msgCatDragEl){ return; }
+        var startX = ev.clientX, startY = ev.clientY;
+        var timer = null;
+        var moved = false;
+        function cleanup(){
+          document.removeEventListener('pointermove', move);
+          document.removeEventListener('pointerup', up);
+          document.removeEventListener('pointercancel', up);
+        }
+        function move(e){
+          if(msgCatDragEl !== el){
+            if(Math.abs(e.clientX - startX) > 8 || Math.abs(e.clientY - startY) > 8){
+              moved = true;
+              clearTimeout(timer);
+              cleanup();
+            }
+            return;
+          }
+          if(e.cancelable){ e.preventDefault(); }
+          var target = document.elementFromPoint(e.clientX, e.clientY);
+          var hit = target && target.closest ? target.closest('.msg-cat') : null;
+          if(hit && hit !== el && bar.contains(hit)){
+            var rect = hit.getBoundingClientRect();
+            if(e.clientX < rect.left + rect.width / 2){ bar.insertBefore(el, hit); }
+            else{ bar.insertBefore(el, hit.nextSibling); }
+          }
+          var barRect = bar.getBoundingClientRect();
+          if(e.clientX < barRect.left + 30){ bar.scrollLeft -= 8; }
+          else if(e.clientX > barRect.right - 30){ bar.scrollLeft += 8; }
+        }
+        function up(){
+          clearTimeout(timer);
+          if(msgCatDragEl === el){
+            el.classList.remove('dragging');
+            msgCatDragEl = null;
+            msgCatJustDragged = true;
+            saveMsgCatOrder();
+            window.setTimeout(function(){ msgCatJustDragged = false; }, 360);
+          }
+          cleanup();
+        }
+        document.addEventListener('pointermove', move, {passive:false});
+        document.addEventListener('pointerup', up);
+        document.addEventListener('pointercancel', up);
+        timer = window.setTimeout(function(){
+          if(moved){ return; }
+          msgCatDragEl = el;
+          el.classList.add('dragging');
+          try{ el.setPointerCapture(ev.pointerId); }catch(err){}
+        }, 260);
+      });
+    })(tabs[i]);
+  }
+}
 function bindGalleryScroll(){
   var scrollers = document.querySelectorAll('.gallery-scroll');
   for(var i = 0; i < scrollers.length; i++){
@@ -5522,6 +5777,7 @@ function renderCurrent(skipAnim){
   updateTabbar();
   fitMatchTitles();
   bindGalleryScroll();
+  bindMsgCatDrag();
   bindProfileSwipe();
   bindEdgeBack();
   syncSegmentedControls();
@@ -5827,14 +6083,38 @@ ACTIONS.tab = function(el){
   switchTab(tab);
 };
 ACTIONS.openSearch = function(){
-  var html = '<div class="sheet full">' + sheetHead('搜索', '找一件物品、一门手艺或一份精选') +
-    '<div class="search-field">' + icon('search', 18) + '<input id="searchInput" type="search" placeholder="搜索闲置、技能、城市或精选" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="搜索内容"></div>' +
+  var html = '<div class="sheet full search-sheet">' +
+    '<div class="search-top">' +
+      '<div class="search-field">' + icon('search', 17) +
+        '<input id="searchInput" type="search" placeholder="搜索" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="搜索内容">' +
+        '<button class="search-clear" id="searchClear" data-act="clearSearch" aria-label="清空搜索">' + icon('close', 13) + '</button>' +
+      '</div>' +
+      '<button class="search-cancel" data-act="closeOverlay">取消</button>' +
+    '</div>' +
     '<div class="search-results" id="searchResults">' + searchResultsHtml('') + '</div></div>';
   openOverlay(html, 'search');
   window.setTimeout(function(){
     var input = document.getElementById('searchInput');
     if(input){ input.focus(); }
   }, 120);
+};
+ACTIONS.clearSearch = function(){
+  var input = document.getElementById('searchInput');
+  var field = document.querySelector('.search-field');
+  if(field){ field.classList.remove('has-value'); }
+  if(input){ input.value = ''; input.focus(); }
+  var results = document.getElementById('searchResults');
+  if(results){ results.innerHTML = searchResultsHtml(''); }
+};
+ACTIONS.searchChip = function(el){
+  var q = el.getAttribute('data-q') || '';
+  var input = document.getElementById('searchInput');
+  var field = document.querySelector('.search-field');
+  if(field){ field.classList.add('has-value'); }
+  if(input){ input.value = q; input.focus(); }
+  var results = document.getElementById('searchResults');
+  if(results){ results.innerHTML = searchResultsHtml(q); }
+  addSearchHistory(q);
 };
 ACTIONS.searchOpenMall = function(el){
   var id = el.getAttribute('data-id');
@@ -5857,6 +6137,70 @@ ACTIONS.openAuthor = function(el){
 };
 ACTIONS.authorTab = function(el){
   APP.authorTab = el.getAttribute('data-tab') || 'works';
+  refreshPage(true);
+};
+ACTIONS.followAuthor = function(el){
+  var name = el.getAttribute('data-user') || '';
+  if(!name){ return; }
+  var map = getData('authorFollows', {});
+  if(!map || typeof map !== 'object'){ map = {}; }
+  var next = !map[name];
+  map[name] = next;
+  setData('authorFollows', map);
+  var recs = getInterest();
+  for(var i = 0; i < recs.length; i++){
+    if(recs[i].user === name){ recs[i].followed = next; }
+  }
+  saveInterest(recs);
+  refreshPage(true);
+  showToast(next ? '已关注 ' + name : '已取消关注');
+};
+ACTIONS.messageAuthor = function(el){
+  var name = el.getAttribute('data-user') || '';
+  var bg = el.getAttribute('data-bg') || '#DCE8DD';
+  if(!name){ return; }
+  var html = sheetHead('私信 · ' + name, '本地演示，不会发送到真实服务') +
+    '<div class="sheet-pad">' +
+      '<div class="author-msg-to"><span class="av-msg" style="background:' + e(bg) + '">' + e(name.charAt(0)) + '</span><div><b>' + e(name) + '</b><span>换换作者</span></div></div>' +
+      '<textarea class="sheet-textarea" id="authorMsgInput" maxlength="200" placeholder="想和 ' + e(name) + ' 说点什么…"></textarea>' +
+    '</div>' +
+    '<div class="sheet-submit"><button class="btn btn-primary btn-block press" data-act="sendAuthorMessage" data-user="' + e(name) + '" data-bg="' + e(bg) + '">发送私信</button></div>';
+  openOverlay('<div class="sheet short">' + html + '</div>', 'authorMsg');
+  window.setTimeout(function(){
+    var input = document.getElementById('authorMsgInput');
+    if(input){ input.focus(); }
+  }, 120);
+};
+ACTIONS.sendAuthorMessage = function(el){
+  var name = el.getAttribute('data-user') || '';
+  var bg = el.getAttribute('data-bg') || '#DCE8DD';
+  var input = document.getElementById('authorMsgInput');
+  var text = input ? String(input.value || '').trim() : '';
+  if(!text){ showToast('先写点什么再发送'); return; }
+  var messages = getMessages();
+  var existing = null, i;
+  for(i = 0; i < messages.length; i++){
+    if(!messages[i].system && messages[i].name === name){ existing = messages[i]; break; }
+  }
+  if(existing){
+    existing.preview = text;
+    existing.time = '刚刚';
+    if(!Array.isArray(existing.thread)){ existing.thread = []; }
+    existing.thread.push({me:true, text:text, time:'刚刚'});
+  }else{
+    messages.unshift({
+      id:'msg_' + Date.now(), name:name, avatar:name.charAt(0), bg:bg,
+      preview:text, time:'刚刚', unread:0,
+      thread:[{me:true, text:text, time:'刚刚'}]
+    });
+  }
+  saveMessages(messages);
+  closeOverlay();
+  showToast('私信已发送（本地演示）');
+};
+ACTIONS.msgCat = function(el){
+  if(msgCatJustDragged){ msgCatJustDragged = false; return; }
+  APP.msgCat = el.getAttribute('data-cat') || 'all';
   refreshPage(true);
 };
 ACTIONS.goCart = function(){ closeOverlay(); navigate('cart'); };
@@ -6201,6 +6545,41 @@ ACTIONS.buyDemo = function(el){
 
 /* ============ reco / messages ============ */
 ACTIONS.openReco = function(el){ navigate('recoDetail', {id:el.getAttribute('data-id')}); };
+ACTIONS.shareReco = function(el){
+  var r = recById(el.getAttribute('data-id'));
+  if(!r){ showToast('内容不存在'); return; }
+  var text = '换换｜' + r.title + '\n来自 ' + r.user + ' 的旧物与生活记录。';
+  showModal({
+    icon:'share',
+    title:'转发作品',
+    body:'把「' + e(r.title) + '」分享给朋友。当前为本地原型，复制文案后可在任意聊天工具分享。',
+    buttons:[
+      {label:'复制分享文案', cls:'btn-primary', act:'copyShare', attrs:' data-text="' + e(text) + '"'},
+      {label:'取消', cls:'btn-outline', act:'closeOverlay'}
+    ],
+    note:'不生成外链，不接入第三方分享服务'
+  });
+};
+ACTIONS.copyShare = function(el){
+  var text = el.getAttribute('data-text') || '';
+  var done = function(){ closeOverlay(); showToast('分享文案已复制'); };
+  var fallback = function(){
+    var area = document.createElement('textarea');
+    area.value = text;
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    try{ document.execCommand('copy'); }catch(err){}
+    document.body.removeChild(area);
+    done();
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  }else{
+    fallback();
+  }
+};
 ACTIONS.likeReco = function(el){
   var list = getInterest(), r = findById(list, el.getAttribute('data-id'));
   if(!r){ return; }
@@ -6778,6 +7157,11 @@ document.addEventListener('input', function(ev){
   var el = ev.target;
   if(el && el.id === 'searchInput'){
     var results = document.getElementById('searchResults');
+    var field = el.closest ? el.closest('.search-field') : null;
+    if(field){
+      if(el.value){ field.classList.add('has-value'); }
+      else{ field.classList.remove('has-value'); }
+    }
     if(results){ results.innerHTML = searchResultsHtml(el.value); }
     return;
   }
@@ -6800,6 +7184,9 @@ document.addEventListener('change', function(ev){
   if(key && APP.publish){ APP.publish[key] = el.value; }
 });
 document.addEventListener('keydown', function(ev){
+  if(ev.key === 'Enter' && ev.target && ev.target.id === 'searchInput'){
+    addSearchHistory(ev.target.value);
+  }
   if(ev.key === 'Enter' && ev.target && ev.target.id === 'threadInput'){
     ev.preventDefault();
     var btn = document.querySelector('.thread-send');
