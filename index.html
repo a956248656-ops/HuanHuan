@@ -5553,6 +5553,7 @@ function bindMsgCatDrag(){
             msgCatDragEl = null;
             msgCatJustDragged = true;
             saveMsgCatOrder();
+            showToast('分类顺序已保存');
             window.setTimeout(function(){ msgCatJustDragged = false; }, 360);
           }
           cleanup();
