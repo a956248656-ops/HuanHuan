@@ -3388,6 +3388,114 @@ input,textarea,select{font-family:var(--sans)}
 }
 .detail-page .reco-bar .swap-fab:active{transform:scale(.96)}
 .detail-page .swap-ico{display:flex;color:#fff}
+
+/* square v2: inventory first, tab rail preserved */
+.square-page .sq-head{padding:4px 16px 0;background:#fff}
+.square-page .sq-statement{display:none}
+.square-page .segbar.ink-tabs{
+  padding:0 52px 0 0;gap:0;overflow:visible;
+  justify-content:flex-start
+}
+.square-page .seg-scroll{
+  display:flex;align-items:stretch;gap:32px;flex:1;min-width:0;
+  overflow-x:auto;padding:0 0 0 16px;scrollbar-width:none;overscroll-behavior-x:contain
+}
+.square-page .seg-scroll::-webkit-scrollbar{display:none}
+.square-page .seg-scroll .seg{flex:none}
+.square-page .ink-tabs .seg:after{
+  display:block!important;content:"";position:absolute;left:50%;bottom:0;
+  width:30px;height:2px;border-radius:2px;background:#111;
+  transform:translateX(-50%);opacity:0;transition:opacity .18s ease-out
+}
+.square-page .ink-tabs .seg.on:after{opacity:1}
+.square-page .seg-search{right:6px}
+.square-page .section.sq-v2{padding-top:16px}
+
+.match-strip{
+  display:flex;align-items:center;gap:11px;width:100%;padding:12px 13px;
+  border:0;border-radius:16px;background:#fff;text-align:left;box-shadow:var(--shadow-s)
+}
+.match-strip .ms-icon{
+  width:38px;height:38px;flex:none;border-radius:11px;background:var(--pri-ll);
+  color:var(--pri);display:flex;align-items:center;justify-content:center
+}
+.match-strip .ms-main{flex:1;min-width:0}
+.match-strip .ms-main b{
+  display:block;font-size:14px;line-height:1.3;font-weight:600;letter-spacing:-.15px;color:#111
+}
+.match-strip .ms-main span{
+  display:block;font-size:11px;line-height:1.45;color:#8E8E93;margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.match-strip .ms-score{
+  flex:none;font-size:16px;line-height:1;font-weight:700;color:var(--pri);letter-spacing:-.3px;
+  font-variant-numeric:tabular-nums
+}
+.match-strip .ms-score small{font-size:9px;font-weight:500;margin-left:1px}
+.match-strip .chev{flex:none;color:#C7C7CC;display:flex}
+.match-strip.empty .ms-icon{background:#F2F2F7;color:#8E8E93}
+
+.sq-sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:18px 0 0}
+.sq-sec-head h2{font-family:var(--sans);font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.35px;color:#111}
+.sq-sec-head span{font-size:11px;color:#8E8E93;letter-spacing:-.05px}
+.sq-filters{
+  display:flex;gap:7px;overflow-x:auto;padding:1px 0;margin-top:10px;
+  scrollbar-width:none;overscroll-behavior-x:contain
+}
+.sq-filters::-webkit-scrollbar{display:none}
+.sq-filter{
+  flex:none;height:32px;min-height:32px;padding:0 12px;border:0;border-radius:999px;
+  background:rgba(118,118,128,.10);color:#3C3C43;font-size:12px;font-weight:500;letter-spacing:-.05px
+}
+.sq-filter.on{background:var(--pri);color:#fff}
+.sq-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.sq-card{
+  display:flex;flex-direction:column;min-width:0;overflow:hidden;
+  border:.5px solid rgba(0,0,0,.035);border-radius:16px;background:#fff;text-align:left;
+  box-shadow:0 1px 2px rgba(0,0,0,.025)
+}
+.sq-cover{
+  position:relative;width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  overflow:hidden
+}
+.sq-cover:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(33,28,22,.06))
+}
+.sq-cover-emoji{position:relative;z-index:1;font-size:46px;line-height:1;filter:saturate(.88)}
+.sq-badge{
+  position:absolute;z-index:2;left:8px;top:8px;padding:2px 6px;border-radius:5px;
+  background:rgba(255,255,255,.9);color:#111;font-size:8.5px;line-height:1.3;font-weight:600;letter-spacing:-.02px
+}
+.sq-badge.want{background:rgba(20,122,76,.9);color:#fff}
+.sq-body{display:flex;flex-direction:column;flex:1;padding:9px 10px 10px}
+.sq-item-title{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  min-height:37px;font-size:13.5px;line-height:1.38;font-weight:600;letter-spacing:-.15px;color:#111
+}
+.sq-item-meta{
+  margin-top:4px;font-size:10.5px;line-height:1.35;color:#8E8E93;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.sq-item-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:8px}
+.sq-item-value{font-size:12.5px;line-height:1.2;font-weight:700;color:#111;letter-spacing:-.2px;font-variant-numeric:tabular-nums}
+.sq-item-value small{font-size:9px;font-weight:500;color:#8E8E93;margin-right:2px}
+.sq-item-act{
+  flex:none;height:29px;min-height:29px;padding:0 10px;border:0;border-radius:8px;
+  background:var(--pri-ll);color:var(--pri-d);font-size:11px;font-weight:600
+}
+.sq-card.is-sale .sq-item-act{background:var(--pri);color:#fff}
+.sq-card.is-want .sq-item-act{background:#F2F2F7;color:#111}
+.sq-empty{
+  grid-column:1/-1;padding:36px 18px;border-radius:16px;background:#fff;
+  text-align:center;color:#8E8E93;font-size:12.5px;line-height:1.6
+}
+.sq-empty b{display:block;font-size:15px;color:#111;font-weight:600;margin-bottom:4px}
+.sq-note{font-size:11px;line-height:1.6;color:#8E8E93;margin-top:10px}
+
+/* match sheet */
+.match-sheet-list{flex:1;min-height:0;overflow-y:auto;padding:2px 0 18px}
+.match-sheet-list .match-card{width:100%;flex:none;margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -4263,76 +4371,100 @@ function availableRow(p){
     action +
   '</div>';
 }
+function squareItemCard(p, kind){
+  var isWant = kind === 'want' || p.type === 'want';
+  var isSale = kind === 'sale' || p.sale;
+  var isSkill = p.cat === '技能' || p.skill;
+  var badge = isSale ? '闲置' : (isWant ? '求换' : (isSkill ? '技能' : '可换'));
+  var badgeCls = isWant ? ' want' : '';
+  var topAct = isSale ? 'openBuy' : 'openListing';
+  var cardCls = isSale ? ' is-sale' : (isWant ? ' is-want' : '');
+  var value = isSale
+    ? '<small>¥</small>' + money(p.price)
+    : (isWant ? '<small>预算</small>¥' + money(p.val) : '<small>换值</small>¥' + money(p.val));
+  var action = isSale
+    ? '<button class="sq-item-act" data-act="openBuy" data-id="' + e(p.id) + '">买</button>'
+    : (isWant ? '' : '<button class="sq-item-act" data-act="openSwap" data-target="' + e(p.id) + '">换</button>');
+  var meta = [p.cond, p.city].filter(Boolean).join(' · ');
+  return '<article class="sq-card' + cardCls + '" data-act="' + topAct + '" data-id="' + e(p.id) + '" role="button" tabindex="0">' +
+    '<div class="sq-cover" style="background:' + e(p.color) + '">' +
+      '<span class="sq-badge' + badgeCls + '">' + badge + '</span>' +
+      '<span class="sq-cover-emoji">' + e(p.emoji) + '</span>' +
+    '</div>' +
+    '<div class="sq-body">' +
+      '<div class="sq-item-title">' + e(p.title) + '</div>' +
+      '<div class="sq-item-meta">' + e(meta) + '</div>' +
+      '<div class="sq-item-foot"><span class="sq-item-value">' + value + '</span>' + action + '</div>' +
+    '</div>' +
+  '</article>';
+}
+function matchStrip(matches){
+  if(!matches.length){
+    return '<button class="match-strip empty press" data-act="openPublish">' +
+      '<span class="ms-icon">' + icon('swap2', 19) + '</span>' +
+      '<span class="ms-main"><b>先放一件可换物</b><span>发布后，换换会开始为你寻找匹配</span></span>' +
+      '<span class="chev">' + icon('chevron', 15) + '</span>' +
+    '</button>';
+  }
+  var top = matches[0];
+  return '<button class="match-strip press" data-act="openMatches">' +
+    '<span class="ms-icon">' + icon('swap2', 19) + '</span>' +
+    '<span class="ms-main"><b>为你找到 ' + matches.length + ' 组配对</b><span>最高匹配 ' + top.score + '% · 换值接近、同城优先</span></span>' +
+    '<span class="ms-score">' + top.score + '<small>%</small></span>' +
+    '<span class="chev">' + icon('chevron', 15) + '</span>' +
+  '</button>';
+}
 function squareSwapBody(){
-  var matches = getMatches();
+  var matches = getMatches(), user = getUser();
   var posts = getPosts(), list = [], i;
+  var filter = APP.availableFilter || 'all';
   for(i = 0; i < posts.length; i++){
     var p = posts[i];
-    if(p.type !== 'have' || p.sale || p.sync === false){ continue; }
-    if(APP.availableFilter === 'thing' && p.cat === '技能'){ continue; }
-    if(APP.availableFilter === 'skill' && p.cat !== '技能'){ continue; }
+    if(p.mine || p.sale || p.status === 'sale' || p.sync === false){ continue; }
+    if(p.type !== 'have' && p.type !== 'want'){ continue; }
+    if(filter === 'city' && p.city !== user.city){ continue; }
+    if(filter === 'skill' && !(p.cat === '技能' || p.skill)){ continue; }
+    if(filter === 'want' && p.type !== 'want'){ continue; }
     list.push(p);
   }
-  var matchHtml = '';
-  if(matches.length){
-    for(i = 0; i < matches.length; i++){ matchHtml += matchCard(matches[i]); }
+  list.sort(function(a, b){ return num(b.created) - num(a.created); });
+  var grid = '';
+  for(i = 0; i < list.length; i++){
+    grid += squareItemCard(list[i], list[i].type === 'want' ? 'want' : 'swap');
   }
-  var rows = '';
-  for(i = 0; i < list.length; i++){ rows += availableRow(list[i]); }
-  if(!rows){ rows = '<div class="panel-empty" style="margin:12px"><b>这一栏还没有内容</b>换个筛选，或发布一件闲置。</div>'; }
+  if(!grid){
+    grid = '<div class="sq-empty"><b>没有找到合适的</b>换个筛选，或者先发布一件可换物。</div>';
+  }
   var filters = [
     {k:'all', label:'全部'},
-    {k:'thing', label:'实物'},
-    {k:'skill', label:'技能'}
+    {k:'city', label:'同城'},
+    {k:'skill', label:'技能'},
+    {k:'want', label:'求换'}
   ];
   var filterHtml = '';
   for(i = 0; i < filters.length; i++){
-    filterHtml += '<button class="chip-btn ' + (APP.availableFilter === filters[i].k ? 'on' : '') + '" data-act="filterAvailable" data-filter="' + filters[i].k + '">' + filters[i].label + '</button>';
+    filterHtml += '<button class="sq-filter ' + (filter === filters[i].k ? 'on' : '') + '" data-act="filterAvailable" data-filter="' + filters[i].k + '">' + filters[i].label + '</button>';
   }
-  return '<section class="section">' +
-      '<div class="sec-head"><div><h2>今日配对</h2><p>从你的换物单里，挑出最接近的一次相遇。</p></div><button class="sec-link" data-act="openCenter" data-tab="pending">互换中心' + icon('chevron', 13) + '</button></div>' +
-      (matchHtml
-        ? '<div class="rail-wrap"><div class="match-rail">' + matchHtml + '</div></div><div class="rail-foot">' + icon('swap', 12) + ' 左右滑动 · 共 ' + matches.length + ' 组配对 · 换值参考仅用于撮合</div>'
-        : '<div class="match-empty"><div class="panel-empty"><b>还没有可配对清单</b>先发布一件闲置，系统会开始为你计算。</div></div>') +
-    '</section>' +
-    '<section class="section">' +
-      '<div class="sec-head"><div><h2>可换之物</h2><p>' + list.length + ' 件物品、手艺与时间，等你开口。</p></div><div class="list-filter">' + filterHtml + '</div></div>' +
-      '<div class="swap-list stagger">' + rows + '</div>' +
-      '<div class="mini-note">换值参考分只用于匹配参考，不可当作现金使用。技能类互换需完成状态核验后展示对应标识。</div>' +
-    '</section>' +
-    '<section class="section">' +
-      '<div class="sec-head"><div><h2>一次交换，如何完成</h2><p>提案、确认、交付、存证，每一步都由双方确认。</p></div></div>' +
-      '<div class="swap-entry" style="margin:0;width:100%" data-act="openCenter" data-tab="pending" role="button" tabindex="0">' +
-        '<span class="se-ico">' + icon('swap2', 19) + '</span>' +
-        '<div class="se-main"><b>查看我的互换进度</b><span>不参与交易、不沉淀资金，每一步双方确认</span></div>' +
-        '<span class="chev">' + icon('chevron', 17) + '</span>' +
-      '</div>' +
-    '</section>';
+  return '<section class="section sq-v2">' +
+    matchStrip(matches) +
+    '<div class="sq-sec-head"><h2>可换之物</h2><span>' + list.length + ' 件</span></div>' +
+    '<div class="sq-filters">' + filterHtml + '</div>' +
+    '<div class="sq-grid stagger">' + grid + '</div>' +
+    '<div class="sq-note">换值参考只用于撮合，不代表现金价值。技能类互换以核验状态为准。</div>' +
+  '</section>';
 }
 function idleBody(){
   var posts = getPosts(), list = [], i;
   for(i = 0; i < posts.length; i++){ if(posts[i].sale){ list.push(posts[i]); } }
   list.sort(function(a, b){ return num(b.created) - num(a.created); });
-  var html = '';
-  for(i = 0; i < list.length; i++){
-    var p = list[i];
-    html += '<article class="idle-card press" data-act="openBuy" data-id="' + e(p.id) + '" role="button" tabindex="0">' +
-      '<span class="thumb86" style="background:' + e(p.color) + '">' + e(p.emoji) + '</span>' +
-      '<div class="idle-main">' +
-        '<div class="idle-title">' + e(p.title) + '</div>' +
-        '<div class="idle-meta">' + e(p.cond) + ' · ' + e(p.city) + ' · 由 ' + e(p.user) + ' 发布</div>' +
-        '<div class="idle-bottom">' +
-          '<span class="price-red idle-price"><span class="cur">¥</span>' + money(p.price) + '</span>' +
-          '<button class="mini-btn green press" data-act="openBuy" data-id="' + e(p.id) + '">购买</button>' +
-        '</div>' +
-      '</div>' +
-    '</article>';
-  }
-  return '<section class="section">' +
-      '<div class="sec-head"><div><h2>闲置 · 明码</h2><p>明码标价，也可以带一件自己的闲置来抵扣。</p></div><span class="ref-mark">' + list.length + ' 件在售</span></div>' +
-      '<div class="idle-list stagger">' + html + '</div>' +
-      '<div class="idle-note">闲置直购为卖家自主发布，平台仅提供信息撮合与订单记录；真实支付与物流为原型演示，不接入资金。</div>' +
-    '</section>';
+  var grid = '';
+  for(i = 0; i < list.length; i++){ grid += squareItemCard(list[i], 'sale'); }
+  if(!grid){ grid = '<div class="sq-empty"><b>还没有在售闲置</b>从底部发布一件，明码标价也可以。</div>'; }
+  return '<section class="section sq-v2">' +
+    '<div class="sq-sec-head"><h2>闲置 · 明码</h2><span>' + list.length + ' 件在售</span></div>' +
+    '<div class="sq-grid stagger">' + grid + '</div>' +
+    '<div class="sq-note">闲置直购为卖家自主发布，平台仅提供信息撮合；支付与物流为原型演示。</div>' +
+  '</section>';
 }
 function mallCard(m){
   var sub = '限时补贴 · 立省 ¥' + money(subsidyOf(m));
@@ -4380,12 +4512,9 @@ function renderSquare(){
         '</div>' +
         '<button class="city-btn press" data-act="openCity">' + icon('location', 13) + '<span>' + e(user.city || '北京') + '</span>' + icon('down', 11) + '</button>' +
       '</div>' +
-      '<div class="sq-statement">' +
-        '<h1 class="sq-title">广场</h1>' +
-        '<p class="sq-lead">把闲置，换成刚刚好。</p>' +
-      '</div>' +
     '</header>' +
-    '<div class="segbar ink-tabs" data-seg-key="square" role="tablist" aria-label="广场板块">' + segHtml +
+    '<div class="segbar ink-tabs" data-seg-key="square">' +
+      '<div class="seg-scroll" role="tablist" aria-label="广场板块">' + segHtml + '</div>' +
       '<button class="seg-search press" data-act="openSearch" aria-label="搜索">' + icon('search', 20) + '</button>' +
     '</div>' +
     '<div class="segment-body">' + body + '</div>' +
@@ -6129,6 +6258,16 @@ ACTIONS.tab = function(el){
   closeOverlay();
   switchTab(tab);
 };
+ACTIONS.openMatches = function(){
+  var matches = getMatches(), rows = '', i;
+  for(i = 0; i < matches.length; i++){ rows += matchCard(matches[i]); }
+  if(!rows){
+    rows = '<div class="sq-empty"><b>暂时没有配对</b>先发布一件可换物，再回来看看。</div>';
+  }
+  var html = sheetHead(matches.length ? '为你找到 ' + matches.length + ' 组配对' : '配对', '换值接近 · 同城优先 · 品类互补') +
+    '<div class="match-sheet-list">' + rows + '</div>';
+  openOverlay('<div class="sheet full match-sheet">' + html + '</div>', 'matches');
+};
 ACTIONS.openSearch = function(){
   var html = '<div class="sheet full search-sheet">' +
     '<div class="search-top">' +
@@ -6540,6 +6679,7 @@ ACTIONS.chooseCity = function(el){
   var u = getUser();
   u.city = c;
   saveUser(u);
+  if(APP.route === 'square'){ APP.availableFilter = 'city'; }
   closeOverlay();
   renderCurrent();
   showToast('已切换到 ' + c);
