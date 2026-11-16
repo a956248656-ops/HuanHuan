@@ -3438,6 +3438,10 @@ input,textarea,select{font-family:var(--sans)}
 .sq-sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:18px 0 0}
 .sq-sec-head h2{font-family:var(--sans);font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.35px;color:#111}
 .sq-sec-head span{font-size:11px;color:#8E8E93;letter-spacing:-.05px}
+.sq-clear-mode{
+  display:inline-flex;align-items:center;margin-left:8px;padding:0;border:0;background:transparent;
+  color:var(--pri);font-size:11px;font-weight:600;vertical-align:baseline
+}
 .sq-filters{
   display:flex;gap:7px;overflow-x:auto;padding:1px 0;margin-top:10px;
   scrollbar-width:none;overscroll-behavior-x:contain
@@ -3496,6 +3500,47 @@ input,textarea,select{font-family:var(--sans)}
 /* match sheet */
 .match-sheet-list{flex:1;min-height:0;overflow-y:auto;padding:2px 0 18px}
 .match-sheet-list .match-card{width:100%;flex:none;margin:0 0 10px}
+
+/* exchange modes */
+.sq-pitch{margin-bottom:12px}
+.sq-pitch b{display:block;font-size:17px;line-height:1.3;font-weight:700;letter-spacing:-.3px;color:#111}
+.sq-pitch span{display:block;font-size:11.5px;line-height:1.45;color:#8E8E93;margin-top:3px}
+.sq-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.sq-mode{
+  display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:0;
+  padding:10px;border:.5px solid #E5E5EA;border-radius:14px;background:#fff;text-align:left
+}
+.sq-mode .mode-ico{
+  width:27px;height:27px;border-radius:8px;background:#F2F2F7;color:#111;
+  display:flex;align-items:center;justify-content:center
+}
+.sq-mode b{font-size:12.5px;line-height:1.25;font-weight:600;letter-spacing:-.1px;color:#111}
+.sq-mode em{display:block;font-style:normal;font-size:9.5px;line-height:1.3;color:#8E8E93;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.sq-mode.on{background:var(--pri-ll);border-color:rgba(20,122,76,.22)}
+.sq-mode.on .mode-ico{background:var(--pri);color:#fff}
+.sq-mode.on b{color:var(--pri-d)}
+.sq-mode.on em{color:var(--pri)}
+.sq-item-want{
+  margin-top:3px;font-size:10.5px;line-height:1.35;color:#4A4A4F;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.sq-item-want span{color:#8E8E93}
+
+/* swap sheet two-sided summary */
+.swap-mode-label{
+  display:flex;align-items:center;gap:6px;margin:0 0 10px;padding:8px 10px;
+  border-radius:10px;background:var(--pri-ll);color:var(--pri-d);
+  font-size:11.5px;line-height:1.4;font-weight:500
+}
+.swap-mode-label b{font-weight:600}
+
+/* want publish */
+.want-type{display:flex;gap:2px;padding:3px;border-radius:10px;background:rgba(118,118,128,.10);margin-bottom:10px}
+.want-type button{
+  flex:1;height:34px;min-height:34px;border:0;border-radius:8px;background:transparent;
+  color:#3C3C43;font-size:12px;font-weight:500
+}
+.want-type button.on{background:#fff;color:#111;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
 </style>
 </head>
 <body>
@@ -3529,6 +3574,8 @@ var APP = {
   recoGrid: false,
   authorTab: 'works',
   msgCat: 'all',
+  tradeMode: 'all',
+  wantType: 'item',
   availableFilter: 'all',
   profileIndex: 0,
   swap: null,
@@ -4371,7 +4418,21 @@ function availableRow(p){
     action +
   '</div>';
 }
-function squareItemCard(p, kind){
+var SQUARE_WANTED = {
+  p_my1:'相机 / 数码', p_my2:'咖啡 / 香氛 / 家居', p_my3:'摄影跟拍 / 手作课', p_my4:'游泳课 / 其他技能',
+  p1:'耳机 / 相机配件', p2:'耳机 / 轻薄本', p3:'桌面音响 / 周末跟拍', p4:'手冲器具 / 技能课',
+  p5:'周末跟拍', p6:'摄影 / 其他技能', p7:'技能课 / 物品', p8:'数码相机 / 旅拍',
+  p9:'落地灯 / 小家电', p11:'其他技能', p13:'胶片跟拍 / 户外装备'
+};
+var SQUARE_OFFER = {
+  p10:'富士套机 / 通勤自行车',
+  p12:'黑胶唱片 / 小家电'
+};
+function wantedLineFor(p){
+  if(p.type === 'want'){ return '我可出：' + (p.offer || SQUARE_OFFER[p.id] || '可协商'); }
+  return '想换：' + (p.wanted || SQUARE_WANTED[p.id] || (p.cat === '技能' ? '其他技能或物品' : '物品或技能'));
+}
+function squareItemCard(p, kind, mode){
   var isWant = kind === 'want' || p.type === 'want';
   var isSale = kind === 'sale' || p.sale;
   var isSkill = p.cat === '技能' || p.skill;
@@ -4379,13 +4440,16 @@ function squareItemCard(p, kind){
   var badgeCls = isWant ? ' want' : '';
   var topAct = isSale ? 'openBuy' : 'openListing';
   var cardCls = isSale ? ' is-sale' : (isWant ? ' is-want' : '');
+  var modeKey = mode || APP.tradeMode || 'all';
+  var actionLabel = modeKey === 'item-skill' ? '用物品换' : (modeKey === 'skill-skill' ? '用技能换' : '换');
   var value = isSale
     ? '<small>¥</small>' + money(p.price)
     : (isWant ? '<small>预算</small>¥' + money(p.val) : '<small>换值</small>¥' + money(p.val));
   var action = isSale
     ? '<button class="sq-item-act" data-act="openBuy" data-id="' + e(p.id) + '">买</button>'
-    : (isWant ? '' : '<button class="sq-item-act" data-act="openSwap" data-target="' + e(p.id) + '">换</button>');
+    : (isWant ? '' : '<button class="sq-item-act" data-act="openSwap" data-target="' + e(p.id) + '" data-mode="' + e(modeKey) + '">' + actionLabel + '</button>');
   var meta = [p.cond, p.city].filter(Boolean).join(' · ');
+  var wantedLine = isSale ? '' : wantedLineFor(p);
   return '<article class="sq-card' + cardCls + '" data-act="' + topAct + '" data-id="' + e(p.id) + '" role="button" tabindex="0">' +
     '<div class="sq-cover" style="background:' + e(p.color) + '">' +
       '<span class="sq-badge' + badgeCls + '">' + badge + '</span>' +
@@ -4394,6 +4458,7 @@ function squareItemCard(p, kind){
     '<div class="sq-body">' +
       '<div class="sq-item-title">' + e(p.title) + '</div>' +
       '<div class="sq-item-meta">' + e(meta) + '</div>' +
+      (wantedLine ? '<div class="sq-item-want">' + e(wantedLine) + '</div>' : '') +
       '<div class="sq-item-foot"><span class="sq-item-value">' + value + '</span>' + action + '</div>' +
     '</div>' +
   '</article>';
@@ -4414,40 +4479,61 @@ function matchStrip(matches){
     '<span class="chev">' + icon('chevron', 15) + '</span>' +
   '</button>';
 }
+function tradeModeRow(){
+  var modes = [
+    {k:'item-item', label:'物换物', ex:'相机换耳机', ico:'box'},
+    {k:'item-skill', label:'物换技能', ex:'相机换钢琴课', ico:'swap2'},
+    {k:'skill-skill', label:'技能换技能', ex:'摄影换游泳', ico:'spark'}
+  ];
+  var html = '';
+  for(var i = 0; i < modes.length; i++){
+    html += '<button class="sq-mode ' + (APP.tradeMode === modes[i].k ? 'on' : '') + '" data-act="tradeMode" data-mode="' + modes[i].k + '">' +
+      '<span class="mode-ico">' + icon(modes[i].ico, 15) + '</span>' +
+      '<b>' + modes[i].label + '</b><em>' + modes[i].ex + '</em>' +
+    '</button>';
+  }
+  return '<div class="sq-modes">' + html + '</div>';
+}
 function squareSwapBody(){
   var matches = getMatches(), user = getUser();
   var posts = getPosts(), list = [], i;
   var filter = APP.availableFilter || 'all';
+  var mode = APP.tradeMode || 'all';
   for(i = 0; i < posts.length; i++){
     var p = posts[i];
-    if(p.mine || p.sale || p.status === 'sale' || p.sync === false){ continue; }
+    if((p.mine && !(filter === 'want' && p.type === 'want')) || p.sale || p.status === 'sale' || p.sync === false){ continue; }
     if(p.type !== 'have' && p.type !== 'want'){ continue; }
+    var isSkill = p.cat === '技能' || p.skill;
+    if(mode === 'item-item' && (p.type !== 'have' || isSkill)){ continue; }
+    if((mode === 'item-skill' || mode === 'skill-skill') && (p.type !== 'have' || !isSkill)){ continue; }
     if(filter === 'city' && p.city !== user.city){ continue; }
-    if(filter === 'skill' && !(p.cat === '技能' || p.skill)){ continue; }
     if(filter === 'want' && p.type !== 'want'){ continue; }
     list.push(p);
   }
   list.sort(function(a, b){ return num(b.created) - num(a.created); });
   var grid = '';
   for(i = 0; i < list.length; i++){
-    grid += squareItemCard(list[i], list[i].type === 'want' ? 'want' : 'swap');
+    grid += squareItemCard(list[i], list[i].type === 'want' ? 'want' : 'swap', mode);
   }
   if(!grid){
-    grid = '<div class="sq-empty"><b>没有找到合适的</b>换个筛选，或者先发布一件可换物。</div>';
+    var empty = mode === 'skill-skill' ? '还没有可换的技能。先发布一门你会的技能。' : '没有找到合适的。换个筛选，或者先发布一件可换物。';
+    grid = '<div class="sq-empty"><b>这里还空着</b>' + empty + '</div>';
   }
   var filters = [
     {k:'all', label:'全部'},
     {k:'city', label:'同城'},
-    {k:'skill', label:'技能'},
     {k:'want', label:'求换'}
   ];
   var filterHtml = '';
   for(i = 0; i < filters.length; i++){
     filterHtml += '<button class="sq-filter ' + (filter === filters[i].k ? 'on' : '') + '" data-act="filterAvailable" data-filter="' + filters[i].k + '">' + filters[i].label + '</button>';
   }
+  var clearMode = mode !== 'all' ? '<button class="sq-clear-mode" data-act="clearTradeMode">看全部</button>' : '';
   return '<section class="section sq-v2">' +
+    '<div class="sq-pitch"><b>用你有的，换你想要的</b><span>物品可以换物品，也可以换技能</span></div>' +
+    tradeModeRow() +
     matchStrip(matches) +
-    '<div class="sq-sec-head"><h2>可换之物</h2><span>' + list.length + ' 件</span></div>' +
+    '<div class="sq-sec-head"><h2>可换之物</h2><span>' + list.length + ' 件' + clearMode + '</span></div>' +
     '<div class="sq-filters">' + filterHtml + '</div>' +
     '<div class="sq-grid stagger">' + grid + '</div>' +
     '<div class="sq-note">换值参考只用于撮合，不代表现金价值。技能类互换以核验状态为准。</div>' +
@@ -6423,6 +6509,20 @@ ACTIONS.squareSeg = function(el){
 };
 ACTIONS.filterAvailable = function(el){
   APP.availableFilter = el.getAttribute('data-filter') || 'all';
+  if(APP.availableFilter === 'want'){ APP.tradeMode = 'all'; }
+  refreshPage(true);
+};
+ACTIONS.tradeMode = function(el){
+  var mode = el.getAttribute('data-mode') || 'all';
+  APP.tradeMode = (APP.tradeMode === mode) ? 'all' : mode;
+  APP.availableFilter = 'all';
+  APP.motion = 'segment';
+  renderCurrent();
+  window.scrollTo(0, 0);
+  showToast(APP.tradeMode === 'all' ? '显示全部交换方式' : (mode === 'item-item' ? '只看物换物' : (mode === 'item-skill' ? '只看物换技能' : '只看技能换技能')));
+};
+ACTIONS.clearTradeMode = function(){
+  APP.tradeMode = 'all';
   refreshPage(true);
 };
 ACTIONS.recoTab = function(el){
@@ -6482,7 +6582,8 @@ ACTIONS.openPublish = function(){
   var opts = [
     {mode:'work', ico:'image', title:'发布作品', desc:'图文记录、话题挑战，和同好分享'},
     {mode:'idle', ico:'tag', title:'发布闲置', desc:'明码标价，也可以加入抵扣'},
-    {mode:'swap', ico:'swap2', title:'发布互换', desc:'只换不卖，让系统为你撮合'}
+    {mode:'swap', ico:'swap2', title:'发布互换', desc:'只换不卖，让系统为你撮合'},
+    {mode:'want', ico:'spark', title:'发布求换', desc:'说出你想换的物品或技能，让别人带方案来'}
   ];
   var html = sheetHead('发布', '选择你要发布的内容类型') + '<div class="publish-options">';
   for(var i = 0; i < opts.length; i++){
@@ -6497,9 +6598,58 @@ ACTIONS.openPublish = function(){
 };
 ACTIONS.choosePublish = function(el){
   var mode = el.getAttribute('data-mode') || 'swap';
+  if(mode === 'want'){ closeOverlay(); openWantPublish(); return; }
   closeOverlay();
   APP.publish = newPublishDraft(mode);
   navigate('publish');
+};
+function openWantPublish(){
+  var type = APP.wantType || 'item';
+  var html = sheetHead('发布求换', '说出你想换的，别人可以带方案来') +
+    '<div class="sheet-pad">' +
+      '<div class="want-type">' +
+        '<button class="' + (type === 'item' ? 'on' : '') + '" data-act="wantType" data-type="item">想换物品</button>' +
+        '<button class="' + (type === 'skill' ? 'on' : '') + '" data-act="wantType" data-type="skill">想换技能</button>' +
+      '</div>' +
+      '<input class="sheet-input" id="wantTitle" maxlength="30" placeholder="例如：一台轻薄本 / 4 次钢琴陪练">' +
+      '<input class="sheet-input" id="wantBudget" inputmode="numeric" placeholder="参考预算（可选）" style="margin-top:9px">' +
+      '<textarea class="sheet-textarea" id="wantDesc" maxlength="120" placeholder="城市、可补差、你愿意拿什么换" style="margin-top:9px"></textarea>' +
+    '</div>' +
+    '<div class="sheet-submit"><button class="btn btn-primary btn-block press" data-act="submitWant">发布求换</button></div>';
+  openOverlay('<div class="sheet short">' + html + '</div>', 'wantPublish');
+}
+ACTIONS.wantType = function(el){
+  APP.wantType = el.getAttribute('data-type') || 'item';
+  var buttons = document.querySelectorAll('.want-type button');
+  for(var i = 0; i < buttons.length; i++){
+    if(buttons[i] === el){ buttons[i].classList.add('on'); }
+    else{ buttons[i].classList.remove('on'); }
+  }
+};
+ACTIONS.submitWant = function(){
+  var titleEl = document.getElementById('wantTitle');
+  var descEl = document.getElementById('wantDesc');
+  var budgetEl = document.getElementById('wantBudget');
+  var title = titleEl ? String(titleEl.value || '').trim() : '';
+  if(!title){ showToast('先写清楚你想换什么'); return; }
+  var u = getUser();
+  var isSkill = APP.wantType === 'skill';
+  var post = {
+    id:'p_' + Date.now(), type:'want', cat:isSkill ? '技能' : '综合', title:title,
+    desc:descEl ? String(descEl.value || '').trim() : '', val:budgetEl ? num(budgetEl.value) : 0,
+    cond:'不限', city:u.city || '北京', user:u.name, credit:u.credit || 90, mine:true,
+    color:'#E4DCCD', emoji:isSkill ? '🎓' : '💡', time:'刚刚', status:'want',
+    cert:0, skill:isSkill, created:Date.now(), offer:descEl ? String(descEl.value || '').trim() : ''
+  };
+  var posts = getPosts();
+  posts.unshift(post);
+  savePosts(posts);
+  closeOverlay();
+  APP.seg = 'swap';
+  APP.tradeMode = 'all';
+  APP.availableFilter = 'want';
+  switchTab('square');
+  showToast('求换已发布');
 };
 ACTIONS.switchPublishMode = function(){
   syncPublishFromDOM();
@@ -7025,7 +7175,14 @@ ACTIONS.checkoutDone = function(){ closeOverlay(); switchTab('square'); };
 function swapSheetHtml(){
   var target = postById(APP.swap.targetId);
   if(!target){ return ''; }
+  var mode = APP.swapTradeMode || 'all';
+  var targetSkill = target.cat === '技能' || target.skill;
   var own = myHave(), pick = '', i;
+  if(mode === 'item-item' || mode === 'item-skill'){
+    own = own.filter(function(p){ return !(p.cat === '技能' || p.skill); });
+  }else if(mode === 'skill-skill'){
+    own = own.filter(function(p){ return p.cat === '技能' || p.skill; });
+  }
   for(i = 0; i < own.length; i++){
     var p = own[i];
     if(String(p.id) === String(target.id)){ continue; }
@@ -7039,11 +7196,15 @@ function swapSheetHtml(){
   var quick = ['可以同城面交','我这件成色很好','补差价可以商量','想约周末'];
   var quickHtml = '';
   for(i = 0; i < quick.length; i++){ quickHtml += '<button data-act="swapQuick" data-msg="' + quick[i] + '">' + quick[i] + '</button>'; }
-  var targetSkill = target.cat === '技能' || target.skill;
+  var modeText = mode === 'item-item' ? '物换物 · 你出物品' : (mode === 'item-skill' ? '物换技能 · 你出物品' : (mode === 'skill-skill' ? '技能换技能 · 你出技能' : '选择你出的物品或技能'));
+  var emptyText = (mode === 'skill-skill')
+    ? '你还没有可换的技能。先发布一门技能，再来发起交换。'
+    : (mode === 'item-item' || mode === 'item-skill' ? '你还没有可换的物品。先发布一件闲置，再来发起交换。' : '你还没有可换物。先发布一件闲置或技能，再来发起互换。');
   return sheetHead('发起互换', '平台只做撮合与存证，不参与交易') +
-    '<div class="target-card"><span class="thumb64" style="background:' + e(target.color) + '">' + e(target.emoji) + '</span><div class="target-main"><h3>' + e(target.title) + '</h3><div class="target-meta">' + (targetSkill ? skillBadge(target.cert) : '') + '<span>' + e(target.cond) + ' · ' + e(target.city) + ' · 信用 ' + e(target.credit) + '</span></div></div><div class="target-val"><b>¥' + money(target.val) + '</b><span>换值参考</span></div></div>' +
+    '<div class="target-card"><span class="thumb64" style="background:' + e(target.color) + '">' + e(target.emoji) + '</span><div class="target-main"><h3>' + e(target.title) + '</h3><div class="target-meta">' + (targetSkill ? skillBadge(target.cert) : '') + '<span>TA 的' + (targetSkill ? '技能' : '物品') + ' · ' + e(target.cond) + ' · ' + e(target.city) + ' · 信用 ' + e(target.credit) + '</span></div></div><div class="target-val"><b>¥' + money(target.val) + '</b><span>参考价值</span></div></div>' +
+    '<div class="swap-mode-label" id="swapModeLabel"><b>这次交换：</b>' + modeText + '</div>' +
     '<div class="sheet-sec-head"><h3>你拿出哪些来换</h3><span id="swapPickCount">已选 0 件 · 合计参考 ¥0</span></div>' +
-    '<div class="my-pick-rail">' + (pick || '<div class="my-pick-empty">你还没有可换物。先发布一件闲置，再来发起互换。</div>') + '</div>' +
+    '<div class="my-pick-rail">' + (pick || '<div class="my-pick-empty">' + emptyText + '</div>') + '</div>' +
     '<div class="diff-banner" id="swapDiff"><span class="diff-text">选择物品后自动计算差价</span><span class="diff-figure"></span></div>' +
     '<div class="sheet-sec-head" style="margin-top:4px"><h3>交付方式</h3><span>双方自行完成</span></div>' +
     '<div class="segmented" id="swapDelivery" data-seg-key="delivery">' +
@@ -7061,10 +7222,24 @@ function updateSwapUI(){
   if(!APP.swap){ return; }
   var target = postById(APP.swap.targetId);
   if(!target){ return; }
-  var total = 0, count = 0;
+  var total = 0, count = 0, hasItem = false, hasSkill = false;
   for(var i = 0; i < APP.swap.selected.length; i++){
     var p = postById(APP.swap.selected[i]);
-    if(p){ total += num(p.val); count++; }
+    if(p){
+      total += num(p.val); count++;
+      if(p.cat === '技能' || p.skill){ hasSkill = true; } else { hasItem = true; }
+    }
+  }
+  var modeLabel = document.getElementById('swapModeLabel');
+  if(modeLabel){
+    var targetKind = (target.cat === '技能' || target.skill) ? '技能' : '物品';
+    if(count){
+      var ownKind = hasItem && hasSkill ? '物品 + 技能' : (hasSkill ? '技能' : '物品');
+      modeLabel.innerHTML = '<b>这次交换：</b>' + ownKind + ' 换 ' + targetKind;
+    }else{
+      var baseMode = APP.swapTradeMode;
+      modeLabel.innerHTML = '<b>这次交换：</b>' + (baseMode === 'item-item' ? '物换物 · 你出物品' : (baseMode === 'item-skill' ? '物换技能 · 你出物品' : (baseMode === 'skill-skill' ? '技能换技能 · 你出技能' : '选择你出的物品或技能')));
+    }
   }
   var cards = document.querySelectorAll('.pick-card');
   for(var c = 0; c < cards.length; c++){
@@ -7098,6 +7273,7 @@ ACTIONS.openSwap = function(el){
   var suggest = el.getAttribute('data-suggest') || '';
   var selected = [];
   if(suggest && postById(suggest) && postById(suggest).mine){ selected.push(suggest); }
+  APP.swapTradeMode = el.getAttribute('data-mode') || APP.tradeMode || 'all';
   APP.swap = {targetId:target.id, selected:selected, delivery:'同城面交', note:''};
   openOverlay('<div class="sheet">' + swapSheetHtml() + '</div>', 'swap');
   window.setTimeout(updateSwapUI, 20);
