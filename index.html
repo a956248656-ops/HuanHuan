@@ -3541,6 +3541,57 @@ input,textarea,select{font-family:var(--sans)}
   color:#3C3C43;font-size:12px;font-weight:500
 }
 .want-type button.on{background:#fff;color:#111;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.sq-offer-count{display:block;margin-top:3px;font-size:9.5px;line-height:1.3;color:var(--pri);font-weight:500}
+
+/* exchange detail / offer cards */
+.exchange-page{padding-bottom:calc(24px + env(safe-area-inset-bottom));background:var(--bg)}
+.exchange-post{margin:12px 16px 0;padding:16px;border-radius:16px;background:#fff}
+.exchange-post-top{display:flex;align-items:center;gap:7px;font-size:10.5px;color:#8E8E93}
+.exchange-post-top .want-chip{padding:2px 6px;border-radius:5px;background:var(--pri);color:#fff;font-size:9px;font-weight:600}
+.exchange-post h1{margin-top:9px;font-size:20px;line-height:1.35;font-weight:700;letter-spacing:-.4px;color:#111}
+.exchange-post p{margin-top:7px;font-size:12.5px;line-height:1.6;color:#6E6E73;white-space:pre-wrap}
+.exchange-post-meta{margin-top:12px;padding-top:10px;border-top:.5px solid #E5E5EA;font-size:10.5px;color:#8E8E93}
+.exchange-head{display:flex;align-items:flex-end;justify-content:space-between;margin:20px 16px 0}
+.exchange-head h2{font-size:19px;font-weight:700;letter-spacing:-.3px;color:#111}
+.exchange-head span{font-size:11px;color:#8E8E93}
+.exchange-offers{padding:10px 16px 0}
+.offer-card{padding:13px;border-radius:14px;background:#fff;margin-bottom:9px}
+.offer-head{display:flex;align-items:center;gap:7px;min-width:0}
+.offer-avatar{width:30px;height:30px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#4D463C}
+.offer-name{font-size:13.5px;font-weight:600;color:#111;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.offer-status{margin-left:auto;flex:none;font-size:9.5px;color:#8E8E93}
+.offer-status.ok{color:var(--pri)}
+.offer-status.chain{color:#B36B00}
+.offer-label{margin-top:10px;font-size:9.5px;color:#8E8E93;letter-spacing:.02em}
+.offer-items{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.offer-item{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:8px;background:#F7F7FA;font-size:11px;color:#3C3C43;max-width:100%}
+.offer-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.offer-want{margin-top:8px;font-size:11.5px;line-height:1.45;color:#4A4A4F}
+.offer-note{margin-top:5px;font-size:11px;line-height:1.45;color:#8E8E93}
+.offer-actions{display:flex;gap:7px;margin-top:10px}
+.offer-actions button{height:30px;min-height:30px;padding:0 12px;border-radius:8px;border:0;font-size:11px;font-weight:600}
+.offer-accept{background:var(--pri);color:#fff}
+.offer-decline{background:#F2F2F7;color:#555}
+.offer-chain{background:var(--pri-ll);color:var(--pri-d)}
+.exchange-empty{margin:0 16px;padding:34px 18px;border-radius:16px;background:#fff;text-align:center;color:#8E8E93;font-size:12px;line-height:1.6}
+.exchange-empty b{display:block;font-size:15px;color:#111;font-weight:600;margin-bottom:4px}
+.exchange-cta{padding:14px 16px 0}
+.exchange-cta .btn{min-height:46px}
+.exchange-owner-note{padding:12px 16px 0;font-size:11px;line-height:1.5;color:#8E8E93;text-align:center}
+
+/* offer composer */
+.offer-target{margin-bottom:12px;padding:10px;border-radius:10px;background:#F7F7FA;font-size:12px;line-height:1.5;color:#3C3C43}
+.offer-target b{color:#111}
+.offer-pick-grid{display:flex;flex-direction:column;gap:7px;max-height:230px;overflow-y:auto;padding:1px 0}
+.offer-pick{display:flex;align-items:center;gap:9px;width:100%;padding:9px;border:.5px solid #E5E5EA;border-radius:11px;background:#fff;text-align:left}
+.offer-pick.on{border-color:rgba(20,122,76,.35);background:var(--pri-ll)}
+.offer-pick .op-ico{width:34px;height:34px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-size:17px}
+.offer-pick .op-main{flex:1;min-width:0}
+.offer-pick .op-main b{display:block;font-size:12.5px;line-height:1.3;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.offer-pick .op-main span{display:block;font-size:10px;color:#8E8E93;margin-top:2px}
+.offer-pick .op-check{width:18px;height:18px;border-radius:50%;flex:none;border:.5px solid #C7C7CC;color:#fff;display:flex;align-items:center;justify-content:center}
+.offer-pick.on .op-check{background:var(--pri);border-color:var(--pri)}
+.offer-pick-empty{padding:18px 10px;text-align:center;color:#8E8E93;font-size:11.5px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -3862,6 +3913,32 @@ function clearDemo(){
 }
 function getPosts(){ return getData('posts', []); }
 function savePosts(v){ setData('posts', v); }
+var DEFAULT_EXCHANGE_OFFERS = {
+  p10: [
+    {id:'of_p10_alan', postId:'p10', user:'阿岚', bg:'#D7E4E3', items:[{id:'p6', title:'游泳私教 6 次', emoji:'🏊', color:'#D7E4E3', kind:'skill', val:1100}], note:'游泳私教 6 次，想换你手上的轻薄本需求。', status:'pending', created:1761500000000},
+    {id:'of_p10_xiaoye', postId:'p10', user:'小野', bg:'#E2DCCF', items:[{id:'p7', title:'钢琴陪练 8 次', emoji:'🎹', color:'#E2DCCF', kind:'skill', val:960}], note:'钢琴陪练 8 次，线上或北京都可约。', status:'pending', created:1761490000000}
+  ],
+  p12: [
+    {id:'of_p12_chuxia', postId:'p12', user:'初夏', bg:'#D5E0E6', items:[{id:'p1', title:'Air Jordan 1 高帮 42码', emoji:'👟', color:'#E5DED2', kind:'item', val:1200}], note:'AJ1 42 码，想换你的黑胶唱片。', status:'pending', created:1761480000000},
+    {id:'of_p12_senye', postId:'p12', user:'森野', bg:'#DCE2D3', items:[{id:'p5', title:'露营天幕 + 蛋卷桌', emoji:'⛺', color:'#DCE2D3', kind:'item', val:780}], note:'露营天幕加蛋卷桌，可补差。', status:'pending', created:1761470000000}
+  ]
+};
+function getExchangeOffers(postId){
+  var all = getData('exchangeOffers', null);
+  if(all && Array.isArray(all[postId])){ return all[postId]; }
+  if(DEFAULT_EXCHANGE_OFFERS[postId]){ return JSON.parse(JSON.stringify(DEFAULT_EXCHANGE_OFFERS[postId])); }
+  return [];
+}
+function saveExchangeOffers(postId, list){
+  var all = getData('exchangeOffers', null);
+  if(!all || typeof all !== 'object'){ all = {}; }
+  all[postId] = list;
+  setData('exchangeOffers', all);
+}
+function offerSnapshot(p){
+  return {id:p.id, title:p.title, emoji:p.emoji, color:p.color, kind:(p.cat === '技能' || p.skill) ? 'skill' : 'item', val:p.val};
+}
+function offerCount(postId){ return getExchangeOffers(postId).length; }
 function getOrders(){ return getData('orders', []); }
 function saveOrders(v){ setData('orders', v); }
 function getMall(){ return getData('mall', []); }
@@ -4438,8 +4515,9 @@ function squareItemCard(p, kind, mode){
   var isSkill = p.cat === '技能' || p.skill;
   var badge = isSale ? '闲置' : (isWant ? '求换' : (isSkill ? '技能' : '可换'));
   var badgeCls = isWant ? ' want' : '';
-  var topAct = isSale ? 'openBuy' : 'openListing';
+  var topAct = isSale ? 'openBuy' : (isWant ? 'openExchange' : 'openListing');
   var cardCls = isSale ? ' is-sale' : (isWant ? ' is-want' : '');
+  var offersN = isWant ? offerCount(p.id) : 0;
   var modeKey = mode || APP.tradeMode || 'all';
   var actionLabel = modeKey === 'item-skill' ? '用物品换' : (modeKey === 'skill-skill' ? '用技能换' : '换');
   var value = isSale
@@ -4459,6 +4537,7 @@ function squareItemCard(p, kind, mode){
       '<div class="sq-item-title">' + e(p.title) + '</div>' +
       '<div class="sq-item-meta">' + e(meta) + '</div>' +
       (wantedLine ? '<div class="sq-item-want">' + e(wantedLine) + '</div>' : '') +
+      (isWant ? '<div class="sq-offer-count">' + (offersN ? offersN + ' 人回应' : '等第一个回应') + '</div>' : '') +
       '<div class="sq-item-foot"><span class="sq-item-value">' + value + '</span>' + action + '</div>' +
     '</div>' +
   '</article>';
@@ -5198,6 +5277,69 @@ function renderAuthorProfile(){
   '</div>';
 }
 
+/* ============ exchange thread ============ */
+function offerStatus(offer){
+  if(offer.status === 'accepted'){ return {label:'已接受', cls:'ok'}; }
+  if(offer.status === 'declined'){ return {label:'已婉拒', cls:''}; }
+  if(offer.status === 'chained'){ return {label:'接龙中', cls:'chain'}; }
+  return {label:'待回应', cls:''};
+}
+function exchangeOfferCard(offer, post, isOwner, all){
+  var me = getUser(), isMine = offer.user === me.name;
+  var st = offerStatus(offer);
+  var items = '';
+  for(var i = 0; i < offer.items.length; i++){
+    var it = offer.items[i];
+    items += '<span class="offer-item"><span>' + e(it.emoji || '·') + '</span><span>' + e(it.title) + '</span></span>';
+  }
+  var chainName = '';
+  if(offer.chainTo){
+    for(var j = 0; j < all.length; j++){ if(all[j].id === offer.chainTo){ chainName = all[j].user; break; } }
+  }
+  var actions = '';
+  if(isOwner && offer.status === 'pending'){
+    actions = '<button class="offer-accept" data-act="acceptOffer" data-post="' + e(post.id) + '" data-id="' + e(offer.id) + '">接受这个意向</button>' +
+      '<button class="offer-decline" data-act="declineOffer" data-post="' + e(post.id) + '" data-id="' + e(offer.id) + '">婉拒</button>';
+  }else if(!isOwner && !isMine && offer.status === 'pending'){
+    actions = '<button class="offer-chain" data-act="chainOffer" data-post="' + e(post.id) + '" data-id="' + e(offer.id) + '">加入接龙</button>';
+  }else if(isOwner && offer.status === 'accepted'){
+    actions = '<button class="offer-chain" data-act="openCenter" data-tab="pending">进入互换中心</button>';
+  }
+  return '<article class="offer-card">' +
+    '<div class="offer-head"><span class="offer-avatar" style="background:' + e(offer.bg || '#DCE8DD') + '">' + e(offer.user.charAt(0)) + '</span><span class="offer-name">' + e(offer.user) + '</span><span class="offer-status ' + st.cls + '">' + st.label + '</span></div>' +
+    '<div class="offer-label">' + (offer.chainTo ? '接龙给 ' + e(chainName || '对方') + ' · 我出' : '我出（' + (offer.items.length > 1 ? offer.items.length + ' 件' : '单件') + '）') + '</div>' +
+    '<div class="offer-items">' + items + '</div>' +
+    '<div class="offer-want">' + (offer.chainTo ? '想接上这条交换链' : '想换：' + e(post.title)) + '</div>' +
+    (offer.note ? '<div class="offer-note">' + e(offer.note) + '</div>' : '') +
+    (actions ? '<div class="offer-actions">' + actions + '</div>' : '') +
+  '</article>';
+}
+function renderExchangeDetail(){
+  var post = postById(APP.params.id);
+  if(!post || post.type !== 'want'){
+    return '<div class="plain-page">' + topbar('交换意向') + '<div class="plain-wrap"><div class="panel-empty"><b>这条求换不存在</b>它可能已经被关闭。</div></div></div>';
+  }
+  var me = getUser(), isOwner = !!post.mine;
+  var offers = getExchangeOffers(post.id), rows = '', i;
+  for(i = 0; i < offers.length; i++){ rows += exchangeOfferCard(offers[i], post, isOwner, offers); }
+  var responded = false;
+  for(i = 0; i < offers.length; i++){ if(offers[i].user === me.name){ responded = true; } }
+  return '<div class="exchange-page">' +
+    topbar('交换意向') +
+    '<section class="exchange-post">' +
+      '<div class="exchange-post-top"><span class="want-chip">求换</span><span>' + e(post.city) + '</span><span>·</span><span>' + e(post.user) + '</span></div>' +
+      '<h1>' + e(post.title) + '</h1>' +
+      '<p>' + e(post.desc) + '</p>' +
+      '<div class="exchange-post-meta">' + (isOwner ? '你发布的求换' : '回应会出现在这里，公开但不展示联系方式') + '</div>' +
+    '</section>' +
+    '<div class="exchange-head"><h2>交换意向</h2><span>' + offers.length + ' 人回应</span></div>' +
+    '<div class="exchange-offers">' + (rows || '<div class="exchange-empty"><b>还没有人回应</b>把这条求换分享出去，让有合适物品或技能的人看到。</div>') + '</div>' +
+    (isOwner
+      ? '<div class="exchange-owner-note">你是发布者。收到意向后再决定接受谁，不公开联系方式。</div>'
+      : '<div class="exchange-cta"><button class="btn btn-primary btn-block press" data-act="openOffer" data-post="' + e(post.id) + '"' + (responded ? ' disabled' : '') + '>' + (responded ? '你已提交意向' : '我要回应') + '</button></div>') +
+  '</div>';
+}
+
 /* ============ publish ============ */
 function newPublishDraft(mode){
   var user = getUser();
@@ -5719,6 +5861,7 @@ ROUTE_FUNCS = {
   swapcenter: renderSwapCenter,
   recoDetail: renderRecoDetail,
   authorProfile: renderAuthorProfile,
+  exchangeDetail: renderExchangeDetail,
   publish: renderPublish,
   cart: renderCart,
   checkout: renderCheckout,
@@ -6846,9 +6989,98 @@ ACTIONS.openRules = function(){
 };
 
 /* ============ listing / buying ============ */
+function openOfferSheet(postId, chainId){
+  var post = postById(postId);
+  if(!post){ return; }
+  var all = getExchangeOffers(postId), chain = null, i;
+  for(i = 0; i < all.length; i++){ if(all[i].id === chainId){ chain = all[i]; break; } }
+  var own = myHave(), picks = '';
+  APP.offerDraft = {postId:postId, chainTo:chainId || '', selected:[]};
+  for(i = 0; i < own.length; i++){
+    picks += '<button class="offer-pick" data-act="offerToggle" data-id="' + e(own[i].id) + '">' +
+      '<span class="op-ico" style="background:' + e(own[i].color) + '">' + e(own[i].emoji) + '</span>' +
+      '<span class="op-main"><b>' + e(own[i].title) + '</b><span>' + (own[i].cat === '技能' || own[i].skill ? '技能' : '物品') + ' · 参考 ¥' + money(own[i].val) + '</span></span>' +
+      '<span class="op-check">' + icon('check', 11) + '</span>' +
+    '</button>';
+  }
+  var targetText = chain
+    ? '接龙对象：<b>' + e(chain.user) + '</b>，TA 出 ' + e(chain.items.map(function(x){ return x.title; }).join('、'))
+    : '回应 <b>' + e(post.user) + '</b> 的求换：' + e(post.title);
+  var html = sheetHead(chain ? '加入交换接龙' : '我要回应', chain ? '你可以补上这条交换链的一环' : '选择你愿意拿出的单件或多件') +
+    '<div class="sheet-pad">' +
+      '<div class="offer-target">' + targetText + '</div>' +
+      '<div class="offer-pick-grid">' + (picks || '<div class="offer-pick-empty">你还没有可换物。<br>先发布一件物品或技能，再回来回应。</div>') + '</div>' +
+      '<textarea class="sheet-textarea" id="offerNote" maxlength="120" placeholder="补一句条件：城市、可补差、时间…" style="margin-top:10px"></textarea>' +
+    '</div>' +
+    '<div class="sheet-submit"><button class="btn btn-primary btn-block press" data-act="submitOffer">提交交换意向</button></div>';
+  openOverlay('<div class="sheet short">' + html + '</div>', 'offer');
+}
+ACTIONS.openExchange = function(el){
+  var id = el.getAttribute('data-id');
+  navigate('exchangeDetail', {id:id});
+};
+ACTIONS.openOffer = function(el){
+  openOfferSheet(el.getAttribute('data-post'), '');
+};
+ACTIONS.chainOffer = function(el){
+  openOfferSheet(el.getAttribute('data-post'), el.getAttribute('data-id'));
+};
+ACTIONS.offerToggle = function(el){
+  if(!APP.offerDraft){ return; }
+  var id = el.getAttribute('data-id');
+  var idx = APP.offerDraft.selected.indexOf(id);
+  if(idx >= 0){ APP.offerDraft.selected.splice(idx, 1); el.classList.remove('on'); }
+  else{ APP.offerDraft.selected.push(id); el.classList.add('on'); }
+};
+ACTIONS.submitOffer = function(){
+  if(!APP.offerDraft){ return; }
+  var d = APP.offerDraft;
+  if(!d.selected.length){ showToast('至少选一件你愿意拿出的东西'); return; }
+  var post = postById(d.postId);
+  if(!post){ return; }
+  var me = getUser(), items = [], i;
+  for(i = 0; i < d.selected.length; i++){
+    var p = postById(d.selected[i]);
+    if(p){ items.push(offerSnapshot(p)); }
+  }
+  if(!items.length){ showToast('选中的物品不存在'); return; }
+  var noteEl = document.getElementById('offerNote');
+  var list = getExchangeOffers(d.postId);
+  list.push({
+    id:'of_' + Date.now(), postId:d.postId, user:me.name,
+    bg:me.avatar && me.avatar.bg ? me.avatar.bg : '#DCE8DD',
+    items:items, note:noteEl ? String(noteEl.value || '').trim() : '',
+    status:d.chainTo ? 'chained' : 'pending', chainTo:d.chainTo || '', created:Date.now()
+  });
+  saveExchangeOffers(d.postId, list);
+  APP.offerDraft = null;
+  closeOverlay();
+  refreshPage(true);
+  showToast(d.chainTo ? '已加入接龙' : '交换意向已提交');
+};
+ACTIONS.acceptOffer = function(el){
+  var postId = el.getAttribute('data-post'), offerId = el.getAttribute('data-id');
+  var list = getExchangeOffers(postId), found = null, i;
+  for(i = 0; i < list.length; i++){
+    if(list[i].id === offerId){ found = list[i]; found.status = 'accepted'; }
+    else if(list[i].status === 'pending'){ list[i].status = 'declined'; }
+  }
+  if(!found){ return; }
+  saveExchangeOffers(postId, list);
+  refreshPage(true);
+  showToast('已接受这个意向，进入互换中心继续');
+};
+ACTIONS.declineOffer = function(el){
+  var postId = el.getAttribute('data-post'), offerId = el.getAttribute('data-id');
+  var list = getExchangeOffers(postId);
+  for(var i = 0; i < list.length; i++){ if(list[i].id === offerId){ list[i].status = 'declined'; } }
+  saveExchangeOffers(postId, list);
+  refreshPage(true);
+};
 ACTIONS.openListing = function(el){
   var p = postById(el.getAttribute('data-id'));
   if(!p){ showToast('物品不存在'); return; }
+  if(p.type === 'want'){ closeOverlay(); navigate('exchangeDetail', {id:p.id}); return; }
   var isSkill = p.cat === '技能' || p.skill;
   var html = sheetHead('物品详情') +
     '<div class="target-card"><span class="thumb64" style="background:' + e(p.color) + '">' + e(p.emoji) + '</span><div class="target-main"><h3>' + e(p.title) + '</h3><div class="target-meta">' + (isSkill ? skillBadge(p.cert) : '') + '<span>' + e(p.cond) + ' · ' + e(p.city) + '</span><span>·</span><span>信用 ' + e(p.credit) + '</span></div><div class="target-meta" style="margin-top:5px">' + e(p.desc) + '</div></div><div class="target-val"><b>¥' + money(p.val) + '</b><span>换值参考</span></div></div>' +
