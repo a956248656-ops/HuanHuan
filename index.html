@@ -3592,6 +3592,97 @@ input,textarea,select{font-family:var(--sans)}
 .offer-pick .op-check{width:18px;height:18px;border-radius:50%;flex:none;border:.5px solid #C7C7CC;color:#fff;display:flex;align-items:center;justify-content:center}
 .offer-pick.on .op-check{background:var(--pri);border-color:var(--pri)}
 .offer-pick-empty{padding:18px 10px;text-align:center;color:#8E8E93;font-size:11.5px;line-height:1.6}
+
+/* exchange-first square: my exchange console + demand wall */
+.exchange-console{
+  position:relative;overflow:hidden;margin-bottom:12px;padding:16px;
+  border-radius:20px;background:#0E3A2A;color:#fff
+}
+.exchange-console:after{
+  content:"换";position:absolute;right:4px;bottom:-28px;font-size:120px;line-height:1;
+  font-weight:700;letter-spacing:-.12em;color:rgba(255,255,255,.045);pointer-events:none
+}
+.ec-head{position:relative;z-index:1;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.ec-head b{font-size:14px;font-weight:600;letter-spacing:-.1px}
+.ec-head em{font-style:normal;font-size:9.5px;color:rgba(255,255,255,.48);letter-spacing:.02em}
+.ec-sides{position:relative;z-index:1;display:flex;align-items:stretch;gap:10px;margin-top:14px}
+.ec-side{flex:1;min-width:0}
+.ec-label{font-size:10px;color:rgba(255,255,255,.56);letter-spacing:.04em}
+.ec-count{display:block;font-size:31px;line-height:1.05;font-weight:700;letter-spacing:-.05em;margin-top:1px}
+.ec-count small{font-size:10px;font-weight:500;color:rgba(255,255,255,.5);margin-left:3px;letter-spacing:0}
+.ec-chips{display:flex;flex-direction:column;gap:2px;margin-top:7px;min-height:30px}
+.ec-chip{
+  display:block;font-size:10.5px;line-height:1.35;color:rgba(255,255,255,.8);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.ec-chip.empty{color:rgba(255,255,255,.36)}
+.ec-arrow{
+  width:30px;flex:none;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.62)
+}
+.ec-arrow .ico{width:22px;height:22px}
+.ec-match{
+  position:relative;z-index:1;width:100%;height:40px;min-height:40px;margin-top:14px;
+  padding:0 12px;border:0;border-radius:11px;background:#fff;color:#0E3A2A;
+  display:flex;align-items:center;gap:7px;text-align:left;font-size:13px;font-weight:600
+}
+.ec-match em{font-style:normal;font-size:10px;font-weight:500;color:#6E6E73;margin-left:auto}
+.ec-match .chev{display:flex;color:#0E3A2A}
+
+.exchange-filter-row{
+  display:flex;gap:7px;overflow-x:auto;padding:1px 0 2px;margin:2px 0 4px;
+  scrollbar-width:none;overscroll-behavior-x:contain
+}
+.exchange-filter-row::-webkit-scrollbar{display:none}
+.exchange-filter-row .sq-filter{height:30px;min-height:30px;font-size:11px}
+.exchange-wall-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:18px 0 8px}
+.exchange-wall-head h2{font-size:21px;line-height:1.2;font-weight:700;letter-spacing:-.4px;color:#111}
+.exchange-wall-head span{font-size:10.5px;color:#8E8E93;letter-spacing:-.05px}
+
+.want-poster{
+  position:relative;display:block;width:100%;overflow:hidden;margin-bottom:10px;padding:15px;
+  border:.5px solid #E5E5EA;border-radius:18px;background:#fff;text-align:left;color:#111
+}
+.want-poster:before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--pri)
+}
+.want-poster:active{transform:scale(.995)}
+.want-poster .wp-mark{
+  position:absolute;right:6px;top:-18px;font-size:92px;line-height:1;font-weight:700;
+  letter-spacing:-.12em;color:rgba(20,122,76,.075);pointer-events:none
+}
+.wp-top{position:relative;z-index:1;display:flex;align-items:center;gap:7px;font-size:10px;color:#8E8E93}
+.wp-kind{
+  padding:2px 6px;border-radius:5px;background:var(--pri);color:#fff;
+  font-size:9px;font-weight:600;letter-spacing:.02em
+}
+.wp-mine{margin-left:auto;color:var(--pri);font-weight:600}
+.wp-label{position:relative;z-index:1;margin-top:10px;font-size:10px;color:#8E8E93;letter-spacing:.04em}
+.wp-title{
+  position:relative;z-index:1;margin-top:3px;max-width:88%;font-size:21px;line-height:1.28;
+  font-weight:700;letter-spacing:-.45px;color:#111;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.wp-offer{position:relative;z-index:1;margin-top:10px;font-size:11.5px;line-height:1.45;color:#6E6E73}
+.wp-offer b{display:block;font-size:9.5px;font-weight:600;color:var(--pri);letter-spacing:.04em;margin-bottom:2px}
+.wp-offer span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-foot{position:relative;z-index:1;display:flex;align-items:center;gap:7px;margin-top:13px;padding-top:10px;border-top:.5px solid #E5E5EA}
+.wp-avatar{width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#4D463C}
+.wp-user{font-size:10.5px;font-weight:600;color:#3C3C43;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-city{font-size:10px;color:#8E8E93;white-space:nowrap}
+.wp-watch{margin-left:auto;display:flex;align-items:center;gap:3px;font-size:10px;color:var(--pri);white-space:nowrap}
+.wp-go{display:flex;align-items:center;color:#111;margin-left:2px}
+.wp-go .ico{width:14px;height:14px}
+.exchange-empty-bold{
+  padding:26px 18px;border-radius:16px;background:#fff;text-align:center;
+  color:#8E8E93;font-size:12px;line-height:1.6;margin-bottom:10px
+}
+.exchange-empty-bold b{display:block;font-size:15px;color:#111;font-weight:600;margin-bottom:4px}
+.exchange-empty-bold button{
+  margin-top:12px;height:34px;min-height:34px;padding:0 14px;border:0;border-radius:9px;
+  background:var(--pri);color:#fff;font-size:11.5px;font-weight:600
+}
+.exchange-supply .sq-card{box-shadow:none;border:.5px solid #E5E5EA}
 </style>
 </head>
 <body>
@@ -4542,80 +4633,119 @@ function squareItemCard(p, kind, mode){
     '</div>' +
   '</article>';
 }
-function matchStrip(matches){
-  if(!matches.length){
-    return '<button class="match-strip empty press" data-act="openPublish">' +
-      '<span class="ms-icon">' + icon('swap2', 19) + '</span>' +
-      '<span class="ms-main"><b>先放一件可换物</b><span>发布后，换换会开始为你寻找匹配</span></span>' +
-      '<span class="chev">' + icon('chevron', 15) + '</span>' +
-    '</button>';
+function myExchangeWants(){
+  var out = [], posts = getPosts(), wishes = getWish(), i;
+  for(i = 0; i < posts.length; i++){
+    if(posts[i].mine && posts[i].type === 'want'){ out.push(posts[i]); }
   }
-  var top = matches[0];
-  return '<button class="match-strip press" data-act="openMatches">' +
-    '<span class="ms-icon">' + icon('swap2', 19) + '</span>' +
-    '<span class="ms-main"><b>为你找到 ' + matches.length + ' 组配对</b><span>最高匹配 ' + top.score + '% · 换值接近、同城优先</span></span>' +
-    '<span class="ms-score">' + top.score + '<small>%</small></span>' +
-    '<span class="chev">' + icon('chevron', 15) + '</span>' +
+  for(i = 0; i < wishes.length; i++){
+    if(wishes[i] && wishes[i].title){ out.push({id:wishes[i].id || ('wish_' + i), title:wishes[i].title, emoji:wishes[i].emoji || '✨', color:wishes[i].color || '#E7E1D6'}); }
+  }
+  return out;
+}
+function exchangeConsole(mine, wants, matches){
+  var chips = '', i;
+  for(i = 0; i < mine.length && i < 2; i++){
+    chips += '<span class="ec-chip">' + e(mine[i].emoji) + ' ' + e(mine[i].title) + '</span>';
+  }
+  if(!mine.length){ chips = '<span class="ec-chip empty">先放一件你能出的</span>'; }
+  var wantChips = '';
+  for(i = 0; i < wants.length && i < 2; i++){
+    wantChips += '<span class="ec-chip">' + e(wants[i].emoji || '✨') + ' ' + e(wants[i].title) + '</span>';
+  }
+  if(!wants.length){ wantChips = '<span class="ec-chip empty">还没有求换</span>'; }
+  var hasMine = mine.length > 0;
+  var matchLabel = hasMine ? '看看能换什么' : '先发布我能出的';
+  var matchMeta = hasMine ? (matches.length ? matches.length + ' 组配对' : '暂无配对') : '从一件闲置或技能开始';
+  return '<section class="exchange-console">' +
+    '<div class="ec-head"><b>我的交换</b><em>我有 → 我能换</em></div>' +
+    '<div class="ec-sides">' +
+      '<div class="ec-side"><span class="ec-label">我有</span><b class="ec-count">' + mine.length + '<small>件</small></b><div class="ec-chips">' + chips + '</div></div>' +
+      '<div class="ec-arrow">' + icon('swap', 22) + '</div>' +
+      '<div class="ec-side"><span class="ec-label">我想换</span><b class="ec-count">' + wants.length + '<small>个</small></b><div class="ec-chips">' + wantChips + '</div></div>' +
+    '</div>' +
+    '<button class="ec-match" data-act="' + (hasMine ? 'openMatches' : 'openPublish') + '"><span>' + matchLabel + '</span><em>' + matchMeta + '</em><span class="chev">' + icon('chevron', 14) + '</span></button>' +
+  '</section>';
+}
+function wantPoster(p){
+  var offer = p.offer || SQUARE_OFFER[p.id] || p.desc || '可以聊聊';
+  var count = offerCount(p.id);
+  var isSkill = p.cat === '技能' || p.skill;
+  var watch = p.mine ? (count ? count + ' 人回应' : '等第一个回应') : (count ? '围观 ' + count : '围观');
+  return '<button class="want-poster press" data-act="openExchange" data-id="' + e(p.id) + '">' +
+    '<span class="wp-mark">换</span>' +
+    '<span class="wp-top"><span class="wp-kind">' + (isSkill ? '求换技能' : '求换物品') + '</span><span>' + e(p.city) + '</span>' + (p.mine ? '<span class="wp-mine">我的求换</span>' : '') + '</span>' +
+    '<span class="wp-label">我想要</span>' +
+    '<span class="wp-title">' + e(p.title) + '</span>' +
+    '<span class="wp-offer"><b>我能出</b><span>' + e(offer) + '</span></span>' +
+    '<span class="wp-foot"><span class="wp-avatar" style="background:' + e(p.avBg || '#DCE8DD') + '">' + e(p.user.charAt(0)) + '</span><span class="wp-user">' + e(p.user) + '</span><span class="wp-city">· ' + e(p.city) + '</span><span class="wp-watch">' + e(watch) + '</span><span class="wp-go">' + icon('chevron', 14) + '</span></span>' +
   '</button>';
 }
-function tradeModeRow(){
+function exchangeFilterRow(){
+  var mode = APP.tradeMode || 'all';
+  var city = APP.availableFilter === 'city';
+  var html = '<button class="sq-filter ' + (mode === 'all' ? 'on' : '') + '" data-act="clearTradeMode">全部</button>';
   var modes = [
-    {k:'item-item', label:'物换物', ex:'相机换耳机', ico:'box'},
-    {k:'item-skill', label:'物换技能', ex:'相机换钢琴课', ico:'swap2'},
-    {k:'skill-skill', label:'技能换技能', ex:'摄影换游泳', ico:'spark'}
+    {k:'item-item', label:'物换物'},
+    {k:'item-skill', label:'物换技能'},
+    {k:'skill-skill', label:'技能换技能'}
   ];
-  var html = '';
   for(var i = 0; i < modes.length; i++){
-    html += '<button class="sq-mode ' + (APP.tradeMode === modes[i].k ? 'on' : '') + '" data-act="tradeMode" data-mode="' + modes[i].k + '">' +
-      '<span class="mode-ico">' + icon(modes[i].ico, 15) + '</span>' +
-      '<b>' + modes[i].label + '</b><em>' + modes[i].ex + '</em>' +
-    '</button>';
+    html += '<button class="sq-filter ' + (mode === modes[i].k ? 'on' : '') + '" data-act="tradeMode" data-mode="' + modes[i].k + '">' + modes[i].label + '</button>';
   }
-  return '<div class="sq-modes">' + html + '</div>';
+  html += '<button class="sq-filter ' + (city ? 'on' : '') + '" data-act="cityFilter">同城</button>';
+  return '<div class="exchange-filter-row">' + html + '</div>';
+}
+function wantFitsMode(p, mode){
+  if(mode === 'all'){ return true; }
+  var isSkill = p.cat === '技能' || p.skill;
+  if(mode === 'item-item'){ return !isSkill; }
+  return isSkill;
+}
+function supplyFitsMode(p, mode){
+  if(mode === 'all'){ return true; }
+  var isSkill = p.cat === '技能' || p.skill;
+  if(mode === 'item-item'){ return !isSkill; }
+  return isSkill;
 }
 function squareSwapBody(){
-  var matches = getMatches(), user = getUser();
-  var posts = getPosts(), list = [], i;
-  var filter = APP.availableFilter || 'all';
-  var mode = APP.tradeMode || 'all';
+  var user = getUser(), mode = APP.tradeMode || 'all', cityOnly = APP.availableFilter === 'city';
+  var posts = getPosts(), wants = [], haves = [], i;
   for(i = 0; i < posts.length; i++){
     var p = posts[i];
-    if((p.mine && !(filter === 'want' && p.type === 'want')) || p.sale || p.status === 'sale' || p.sync === false){ continue; }
-    if(p.type !== 'have' && p.type !== 'want'){ continue; }
-    var isSkill = p.cat === '技能' || p.skill;
-    if(mode === 'item-item' && (p.type !== 'have' || isSkill)){ continue; }
-    if((mode === 'item-skill' || mode === 'skill-skill') && (p.type !== 'have' || !isSkill)){ continue; }
-    if(filter === 'city' && p.city !== user.city){ continue; }
-    if(filter === 'want' && p.type !== 'want'){ continue; }
-    list.push(p);
+    if(p.type === 'want'){
+      if(cityOnly && p.city !== user.city){ continue; }
+      if(!wantFitsMode(p, mode)){ continue; }
+      wants.push(p);
+      continue;
+    }
+    if(p.type !== 'have' || p.mine || p.sale || p.status === 'sale' || p.sync === false){ continue; }
+    if(cityOnly && p.city !== user.city){ continue; }
+    if(!supplyFitsMode(p, mode)){ continue; }
+    haves.push(p);
   }
-  list.sort(function(a, b){ return num(b.created) - num(a.created); });
-  var grid = '';
-  for(i = 0; i < list.length; i++){
-    grid += squareItemCard(list[i], list[i].type === 'want' ? 'want' : 'swap', mode);
+  wants.sort(function(a, b){ return num(b.created) - num(a.created); });
+  haves.sort(function(a, b){ return num(b.created) - num(a.created); });
+  var wantHtml = '', supplyHtml = '';
+  for(i = 0; i < wants.length; i++){ wantHtml += wantPoster(wants[i]); }
+  for(i = 0; i < haves.length; i++){ supplyHtml += squareItemCard(haves[i], 'swap', mode); }
+  if(!wantHtml){
+    wantHtml = '<div class="exchange-empty-bold"><b>还没有人求换</b>先说出你想要什么，让别人带方案来。<button data-act="openPublish">发布求换</button></div>';
   }
-  if(!grid){
-    var empty = mode === 'skill-skill' ? '还没有可换的技能。先发布一门你会的技能。' : '没有找到合适的。换个筛选，或者先发布一件可换物。';
-    grid = '<div class="sq-empty"><b>这里还空着</b>' + empty + '</div>';
+  if(!supplyHtml){
+    supplyHtml = '<div class="exchange-empty-bold"><b>还没有可换的</b>先放一件物品或技能，才能开始换。<button data-act="openPublish">发布我能出的</button></div>';
   }
-  var filters = [
-    {k:'all', label:'全部'},
-    {k:'city', label:'同城'},
-    {k:'want', label:'求换'}
-  ];
-  var filterHtml = '';
-  for(i = 0; i < filters.length; i++){
-    filterHtml += '<button class="sq-filter ' + (filter === filters[i].k ? 'on' : '') + '" data-act="filterAvailable" data-filter="' + filters[i].k + '">' + filters[i].label + '</button>';
-  }
-  var clearMode = mode !== 'all' ? '<button class="sq-clear-mode" data-act="clearTradeMode">看全部</button>' : '';
-  return '<section class="section sq-v2">' +
-    '<div class="sq-pitch"><b>用你有的，换你想要的</b><span>物品可以换物品，也可以换技能</span></div>' +
-    tradeModeRow() +
-    matchStrip(matches) +
-    '<div class="sq-sec-head"><h2>可换之物</h2><span>' + list.length + ' 件' + clearMode + '</span></div>' +
-    '<div class="sq-filters">' + filterHtml + '</div>' +
-    '<div class="sq-grid stagger">' + grid + '</div>' +
-    '<div class="sq-note">换值参考只用于撮合，不代表现金价值。技能类互换以核验状态为准。</div>' +
+  var mine = myHave();
+  var myWants = myExchangeWants();
+  var matches = getMatches();
+  return '<section class="section sq-v2 exchange-first">' +
+    exchangeConsole(mine, myWants, matches) +
+    exchangeFilterRow() +
+    '<div class="exchange-wall-head"><h2>正在求换</h2><span>' + wants.length + ' 条需求 · 点开围观</span></div>' +
+    wantHtml +
+    '<div class="exchange-wall-head"><h2>可以换给你</h2><span>' + haves.length + ' 件可换</span></div>' +
+    '<div class="exchange-supply">' + (supplyHtml ? '<div class="sq-grid stagger">' + supplyHtml + '</div>' : '') + '</div>' +
+    '<div class="sq-note">换值只用于撮合，不代表现金价值。双方确认后才进入交付。</div>' +
   '</section>';
 }
 function idleBody(){
@@ -6666,6 +6796,11 @@ ACTIONS.tradeMode = function(el){
 };
 ACTIONS.clearTradeMode = function(){
   APP.tradeMode = 'all';
+  APP.availableFilter = 'all';
+  refreshPage(true);
+};
+ACTIONS.cityFilter = function(){
+  APP.availableFilter = APP.availableFilter === 'city' ? 'all' : 'city';
   refreshPage(true);
 };
 ACTIONS.recoTab = function(el){
@@ -6790,7 +6925,7 @@ ACTIONS.submitWant = function(){
   closeOverlay();
   APP.seg = 'swap';
   APP.tradeMode = 'all';
-  APP.availableFilter = 'want';
+  APP.availableFilter = 'all';
   switchTab('square');
   showToast('求换已发布');
 };
